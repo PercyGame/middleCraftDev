@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/amethyst_shard"
+  },
+  "overrides": [
+    {
+      "predicate": {},
+      "model": "minecraft:item/catalyst"
+    }
+  ]
+}

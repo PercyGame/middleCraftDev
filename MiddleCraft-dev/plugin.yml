@@ -1,0 +1,5 @@
+name: MiddleCraft-devplugin
+api-version: 1.20
+author: Percy_Game
+version: 1.0
+main: fr.percygame.middlecraft.Main
