@@ -15,6 +15,12 @@
         "custom_model_data": 2
       },
       "model": "minecraft:item/nether_steel_ingot"
+    },
+    {
+      "predicate" :{
+        "custom_model_data": 3
+      },
+      "model": "minecraft:item/silver_ingot"
     }
   ]
 }
