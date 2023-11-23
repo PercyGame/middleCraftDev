@@ -13,10 +13,7 @@ public class XuniaMainMenu {
 		Inventory i = Bukkit.createInventory(null, 45, ChatColor.GOLD + "Codex Xunia");
 		
 		ItemStack glass = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-		ItemStack craft = new ItemStack(Material.CRAFTING_TABLE);
-		ItemMeta craftMeta = craft.getItemMeta();
-		craftMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "See usful Craft");
-		craft.setItemMeta(craftMeta);
+		
 		
 		i.setItem(0, glass);
 		i.setItem(1, glass);
@@ -41,9 +38,17 @@ public class XuniaMainMenu {
 		//co des items possibles : 10 12 14 16
 		//						   28 30 32 34
 		
-		i.setItem(10, craft);
+		i.setItem(10, createCraftButton());
 		
 		return i;		
+	}
+	
+	public static ItemStack createCraftButton() {
+		ItemStack craft = new ItemStack(Material.CRAFTING_TABLE);
+		ItemMeta craftMeta = craft.getItemMeta();
+		craftMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "See usful Craft");
+		craft.setItemMeta(craftMeta);
+		return craft;
 	}
 
 }

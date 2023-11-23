@@ -39,11 +39,11 @@ public class XuniaListener implements Listener {
 		ItemStack clicked = e.getCurrentItem();
 		
 		if (inv.equals(XuniaMainMenu.createCodexXuniaMenu())) {
-			if (clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() 
-					&& clicked.getItemMeta().getDisplayName() == ChatColor.GREEN + 
-					"" + ChatColor.BOLD + "See usful Craft") {
+			if (clicked.equals(XuniaMainMenu.createCraftButton())) {
 				p.sendMessage("Craft");
 			}
 		}
 	}
+	
+	
 }
