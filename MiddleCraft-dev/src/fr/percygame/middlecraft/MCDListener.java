@@ -18,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.percygame.middlecraft.books.CodexXunia;
+import fr.percygame.middlecraft.books.xuniaMenu.XuniaMainMenu;
 import fr.percygame.middlecraft.ressources.Silver;
 
 public class MCDListener implements Listener {
@@ -48,43 +49,5 @@ public class MCDListener implements Listener {
 				}
 			}
 		}
-	}
-	
-	
-	@EventHandler
-	public void onOpenCodexXunia(PlayerInteractEvent e) {
-		Player p = e.getPlayer();
-		Action action = e.getAction();
-		ItemStack item = p.getInventory().getItemInMainHand();
-		
-		if (action == null) {
-			return;
-		}
-		
-		if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-			if (item.equals(CodexXunia.createCodexXunia())) {
-				//ouvrir le menu
-				p.openInventory(CodexXunia.createCodexXuniaMenu());
-			}
-		}
-	}
-	
-	@EventHandler
-	public void onCodexXuniaMainMenuClick(InventoryClickEvent e) {
-		Player p = (Player) e.getWhoClicked();
-		Inventory inv = e.getInventory();
-		ItemStack clicked = e.getCurrentItem();
-		
-		if (inv.equals(CodexXunia.createCodexXuniaMenu())) {
-			if (clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() 
-					&& clicked.getItemMeta().getDisplayName() == ChatColor.GREEN + 
-					"" + ChatColor.BOLD + "See usful Craft") {
-				p.sendMessage("Craft");
-			}
-		}
-		
-	}
-	
-	
-	
+	}	
 }
