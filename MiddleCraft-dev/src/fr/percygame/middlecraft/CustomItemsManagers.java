@@ -8,6 +8,7 @@ import fr.percygame.middlecraft.essences.NeutralEssence;
 import fr.percygame.middlecraft.essences.WaterEssence;
 import fr.percygame.middlecraft.potion.Blizzard;
 import fr.percygame.middlecraft.ressources.NetherSteel;
+import fr.percygame.middlecraft.ressources.Silver;
 import fr.percygame.middlecraft.ressources.Steel;
 import fr.percygame.middlecraft.sword.HardenedSteelSword;
 import fr.percygame.middlecraft.sword.SteelSword;
@@ -26,6 +27,7 @@ public class CustomItemsManagers {
 		NeutralEssence.createNeutralEssenceCraft(plugin);
 		FireEssence.createFireEssenceCraft(plugin);
 		WaterEssence.createWaterEssenceCraft(plugin);
+		Silver.crateSilverIngotRecipe(plugin);
 		
 		return true;
 	}
