@@ -7,15 +7,22 @@ import fr.percygame.middlecraft.Main;
 
 public class PlayerManager {
 	
+	static Map<UUID, PlayerData> pl = Main.players;
+	
 	public static boolean addPlayerToList(PlayerData pd) {
 		UUID playerID = pd.getPlayerID();
-		Main.players.put(playerID, pd);
+		pl.put(playerID, pd);
 		
 		return true;
 	}
 	
-	public static PlayerData getPlayerFromList(Map<UUID, PlayerData> targetList, UUID playerUUID) {
-		PlayerData playerData = targetList.get(playerUUID);
+	public static PlayerData getPlayerFromList(UUID playerUUID) {
+		PlayerData playerData =pl.get(playerUUID);
 		return playerData;
+	}
+	
+	public static boolean savePlayers() {
+		
+		return true;
 	}
 }
