@@ -1,10 +1,12 @@
 package fr.percygame.middlecraft.playerManager;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class PlayerData {
 	
 	private String playerName;
+	private UUID playerID;
 	private Rank playerRank;
 	private String playerTown;
 	private int playerBalance;
@@ -12,9 +14,10 @@ public class PlayerData {
 	private Grade playerGrade;
 	
 	
-	public PlayerData(String playerName, Rank playerRank, String playerTown, int playerBalance, Set<String> accessibleChunkID,
+	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, Set<String> accessibleChunkID,
 			Grade playerGrade) {
 		this.playerName = playerName;
+		this.playerID = playerID;
 		this.playerRank = playerRank;
 		this.playerTown = playerTown;
 		this.playerBalance = playerBalance;
@@ -33,6 +36,16 @@ public class PlayerData {
 
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
+	}
+
+
+	public UUID getPlayerID() {
+		return playerID;
+	}
+
+
+	public void setPlayerID(UUID playerID) {
+		this.playerID = playerID;
 	}
 
 

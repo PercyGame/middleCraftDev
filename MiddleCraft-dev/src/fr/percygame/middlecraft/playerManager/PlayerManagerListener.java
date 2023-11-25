@@ -5,13 +5,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import fr.percygame.middlecraft.Main;
+
 public class PlayerManagerListener implements Listener{
 
 	@EventHandler 
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if (!p.hasPlayedBefore()) {
-			//créer un nouveau fichier pour le joueur
+			PlayerData playerData = new PlayerData(p.getDisplayName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, null, Grade.PLAYER);
+			PlayerManager.addPlayerToList(playerData);
+			System.out.println(Main.players.toString());
 		}
 	}
 	

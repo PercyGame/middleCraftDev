@@ -1,13 +1,19 @@
 package fr.percygame.middlecraft;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
+import fr.percygame.middlecraft.playerManager.PlayerData;
 
 public class Main extends JavaPlugin{
 	
 	Plugin INSTANCE;
+	public static Map<UUID, PlayerData> players = new HashMap<>();
 	
 	public Main() {
 		this.INSTANCE = this;
