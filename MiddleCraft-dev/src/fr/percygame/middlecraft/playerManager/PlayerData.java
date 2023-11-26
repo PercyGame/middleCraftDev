@@ -1,20 +1,22 @@
 package fr.percygame.middlecraft.playerManager;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.Map;
 import java.util.UUID;
 
-public class PlayerData {
+public class PlayerData implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String playerName;
 	private UUID playerID;
 	private Rank playerRank;
 	private String playerTown;
 	private int playerBalance;
-	private Set<String> accessibleChunckID;
+	private Map<String, Boolean> accessibleChunckID;
 	private Grade playerGrade;
 	
 	
-	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, Set<String> accessibleChunkID,
+	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, Map<String, Boolean> accessibleChunkID,
 			Grade playerGrade) {
 		this.playerName = playerName;
 		this.playerID = playerID;
@@ -79,12 +81,12 @@ public class PlayerData {
 	}
 
 
-	public Set<String> getAccessibleChunckID() {
+	public Map<String, Boolean> getAccessibleChunckID() {
 		return accessibleChunckID;
 	}
 
 
-	public void setAccessibleChunckID(Set<String> accessibleChunckID) {
+	public void setAccessibleChunckID(Map<String, Boolean> accessibleChunckID) {
 		this.accessibleChunckID = accessibleChunckID;
 	}
 

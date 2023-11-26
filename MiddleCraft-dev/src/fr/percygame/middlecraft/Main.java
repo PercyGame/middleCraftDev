@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
+import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
 
 public class Main extends JavaPlugin{
@@ -29,6 +30,11 @@ public class Main extends JavaPlugin{
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		
+	}
+	
+	@Override
+	public void onDisable() {
+		PlayerManager.savePlayers();
 	}
 
 }
