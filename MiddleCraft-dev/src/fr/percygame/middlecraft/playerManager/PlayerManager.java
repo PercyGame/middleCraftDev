@@ -18,6 +18,7 @@ public class PlayerManager {
 	static File saveDir;
 	final static PlayerDataSerealizationManager pdsm = new PlayerDataSerealizationManager();
 	
+	
 	public PlayerManager(Plugin plugin) {
 		 saveDir = new File(plugin.getDataFolder(), "/profils/");
 	}
@@ -43,7 +44,26 @@ public class PlayerManager {
 	
 	public static boolean savePlayers() {
 		
-		pl.forEach((pId, pd) -> savePlayer(pId, pd));
+		try {
+			pl.forEach((pId, pd) -> savePlayer(pId, pd));
+		}
+		catch (Exception e){
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static boolean loadPlayers() {
+		
+		File[] files = saveDir.listFiles();
+		
+		for (File file : files) {
+			String json = FileUtils.loadContent(file);
+			PlayerData pd = pdsm.deserialise(json);
+			Main.players.put(pd.getPlayerID(), pd);
+			System.out.println(pd.getPlayerName() + ", " + pd.getPlayerID() + ", " + pd.getPlayerGrade());
+		}
 		
 		return true;
 	}

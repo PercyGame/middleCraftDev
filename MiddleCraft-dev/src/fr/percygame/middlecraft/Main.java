@@ -31,6 +31,8 @@ public class Main extends JavaPlugin{
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		
+		PlayerManager.loadPlayers();
+		
 	}
 	
 	@Override
