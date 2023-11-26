@@ -37,7 +37,12 @@ public class Main extends JavaPlugin{
 	
 	@Override
 	public void onDisable() {
-		PlayerManager.savePlayers();
+		if(PlayerManager.savePlayers()) {
+			System.out.println("Players data succefuly saved");
+		}
+		else {
+			System.out.println("Error during players data saving");
+		}
 	}
 
 }

@@ -36,9 +36,9 @@ public class PlayerManager {
 	}
 	
 	private static boolean savePlayer(UUID pId, PlayerData pd) {
-		File f = new File(saveDir, pId + ".json");
-		final String json = pdsm.serialize(pd);
-		FileUtils.save(f, json);
+		File f = new File(saveDir, pId + ".json"); // create object of save file
+		final String json = pdsm.serialize(pd); // serialize PlayerData to json syntaxe
+		FileUtils.save(f, json); // save data in json syntaxe in the right file
 		return true;
 	}
 	
