@@ -36,6 +36,7 @@ public class XuniaListener implements Listener {
 		Player p = (Player) e.getWhoClicked();
 		Inventory inv = e.getInventory();
 		ItemStack clicked = e.getCurrentItem();
+		p.sendMessage("ok");
 		
 		if (inv.equals(XuniaMainMenu.createCodexXuniaMenu())) {
 			if (clicked.equals(XuniaMainMenu.createCraftButton())) {

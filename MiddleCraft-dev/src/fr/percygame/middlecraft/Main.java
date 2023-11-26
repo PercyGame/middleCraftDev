@@ -24,6 +24,7 @@ public class Main extends JavaPlugin{
 	@Override
 	public void onEnable() {
 		System.out.println("MiddleCraft dev is starting...");
+		new PlayerManager(INSTANCE);
 		getServer().getPluginManager().registerEvents(new MCDListener(), this);
 		getServer().getPluginManager().registerEvents(new XuniaListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerManagerListener(), this);

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,10 @@ public class MCDListener implements Listener {
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		p.getInventory().addItem(CodexXunia.createCodexXunia());
+		
+		// affichage d'un titre au joueur lors de la connection
+		p.sendTitle("§6MiddleCraft", "§9...Where history begin...", 10, 100, 5);
+		p.playSound(p.getLocation(), Sound.ENTITY_ENDER_EYE_DEATH, 1f, 1f);
 	}
 	
 	@EventHandler
