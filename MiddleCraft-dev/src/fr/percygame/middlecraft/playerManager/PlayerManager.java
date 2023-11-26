@@ -20,7 +20,7 @@ public class PlayerManager {
 	
 	
 	public PlayerManager(Plugin plugin) {
-		 saveDir = new File(plugin.getDataFolder(), "/profils/");
+		 saveDir = new File(plugin.getDataFolder(), "/playerData/");
 	}
 	
 	public static boolean addPlayerToList(PlayerData pd) {
@@ -62,7 +62,6 @@ public class PlayerManager {
 			String json = FileUtils.loadContent(file);
 			PlayerData pd = pdsm.deserialise(json);
 			Main.players.put(pd.getPlayerID(), pd);
-			System.out.println(pd.getPlayerName() + ", " + pd.getPlayerID() + ", " + pd.getPlayerGrade());
 		}
 		
 		return true;
