@@ -20,9 +20,9 @@ public class PlayerManagerListener implements Listener{
 			System.out.println(Main.players.toString());
 		}
         
-        PlayerData pd = pl.get(p.getUniqueId);
-        if (p.getDisplayName != pd.getPlayerName) { // check if the player change his pseudo since the last connection
-            pd.setPlayerName(p.getDisplayName);
+        PlayerData pd = pl.get(p.getUniqueId());
+        if (p.getDisplayName() != pd.getPlayerName()) { // check if the player change his pseudo since the last connection
+            pd.setPlayerName(p.getDisplayName());
         }
 	}
 	
