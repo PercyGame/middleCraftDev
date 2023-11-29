@@ -11,6 +11,7 @@ import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
+import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
 
 public class Main extends JavaPlugin{
 	
@@ -25,9 +26,12 @@ public class Main extends JavaPlugin{
 	public void onEnable() {
 		System.out.println("MiddleCraft dev is starting...");
 		new PlayerManager(INSTANCE);
+		
 		getServer().getPluginManager().registerEvents(new MCDListener(), this);
 		getServer().getPluginManager().registerEvents(new XuniaListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerManagerListener(), this);
+		
+		getCommand("pay").setExecutor(new PayCommand());
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		

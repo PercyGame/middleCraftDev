@@ -3,3 +3,12 @@ api-version: 1.20
 author: Percy_Game
 version: 1.0
 main: fr.percygame.middlecraft.Main
+commands:
+  pay:
+    descrption: allow a player to give to an other a certain amount of his personnal balance
+  orens_give:
+    permission: admin.use
+    descrption: give the admins the ability to give money to a player
+  orens_withdraw:
+    permission: admin.use
+    dsecrption: give the admins the ability to remove any money from a player

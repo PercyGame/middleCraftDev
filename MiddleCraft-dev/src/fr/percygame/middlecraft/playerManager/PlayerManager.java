@@ -1,6 +1,7 @@
 package fr.percygame.middlecraft.playerManager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ public class PlayerManager {
 	
 	
 	static Map<UUID, PlayerData> pl = Main.players;
+	static ArrayList<PlayerData> playerNames = new ArrayList<PlayerData>(); //creating the array list used in getPlayerByName method
 	static File saveDir;
 	final static PlayerDataSerealizationManager pdsm = new PlayerDataSerealizationManager();
 	
@@ -66,4 +68,17 @@ public class PlayerManager {
 		
 		return true;
 	}
+	
+	
+	public static PlayerData getPlayerByName(String playerName) {
+		UUID playerID;
+		playerNames.clear(); //clearing array list from older operation
+		
+		pl.forEach((pId, pd) -> playerNames.add(pd)); //putting in array list all the loading playerData
+		
+		//sacn all playerData to get the right name, and return it
+		
+		return null;
+	}
+	
 }
