@@ -6,12 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Lenovo/Documents/GitHub/middleCraftDev/spigot-api-1.20.2-R0.1-SNAPSHOT.jar">
+	<classpathentry kind="lib" path="C:/Users/easy/Documents/GitHub/middleCraftDev/middleCraftDev/spigot-api-1.20.2-R0.1-SNAPSHOT.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Lenovo/Documents/GitHub/middleCraftDev/gson-2.8.2.jar">
+	<classpathentry kind="lib" path="C:/Users/easy/Documents/GitHub/middleCraftDev/middleCraftDev/gson-2.8.2.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
