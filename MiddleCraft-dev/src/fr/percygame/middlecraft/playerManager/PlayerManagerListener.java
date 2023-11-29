@@ -8,6 +8,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import fr.percygame.middlecraft.Main;
 
 public class PlayerManagerListener implements Listener{
+	
+	static Map<UUID, PlayerData> pl = Main.players;
 
 	@EventHandler 
 	public void onJoin(PlayerJoinEvent e) {
