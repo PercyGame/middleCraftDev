@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.playerManager.PlayerData;
+import fr.percygame.middlecraft.playerManager.PlayerManager;
 
 public class TransactionManager {
 	
@@ -23,13 +24,39 @@ public class TransactionManager {
 		int senderBalance = senderPD.getPlayerBalance();
 		int reciverBalance = reciverPD.getPlayerBalance();
 		
-		if (senderPD.getPlayerBalance() >= orensValue) { //check if sender have engouth orens on balance
+		if (senderBalance >= orensValue) { //check if sender have engouth orens on balance
 			senderPD.setPlayerBalance(senderBalance -= orensValue);
 			reciverPD.setPlayerBalance(reciverBalance += orensValue);
+			PlayerManager.savePlayers(); //save players data after each transaction
 			return true;
 		}
 		else {
 			return false;
+		}
+	}
+	
+	public static boolean orensGive(Player target, int orensValue) {
+		UUID targetId = target.getUniqueId();
+		PlayerData targetPD = pl.get(targetId);
+		int targetBalance = targetPD.getPlayerBalance();
+		
+		targetPD.setPlayerBalance(targetBalance += orensValue);
+		
+		return true;
+	}
+	
+	public static boolean orensWithdraw(Player target, int orensValue) {
+		UUID targetId = target.getUniqueId();
+		PlayerData targetPD = pl.get(targetId);
+		int targetBalance = targetPD.getPlayerBalance();
+		
+		if(targetBalance >= orensValue) {
+			targetPD.setPlayerBalance(targetBalance -= orensValue);
+			return true;
+		}
+		else {
+			targetPD.setPlayerBalance(0);
+			return true;
 		}
 	}
 	
