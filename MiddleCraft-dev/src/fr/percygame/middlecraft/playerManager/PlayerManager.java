@@ -2,6 +2,7 @@ package fr.percygame.middlecraft.playerManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class PlayerManager {
 	
 	
 	static Map<UUID, PlayerData> pl = Main.players;
-	static ArrayList<PlayerData> playerNames = new ArrayList<PlayerData>(); //creating the array list used in getPlayerByName method
+	public static List<PlayerData> players = new ArrayList<PlayerData>();
 	static File saveDir;
 	final static PlayerDataSerealizationManager pdsm = new PlayerDataSerealizationManager();
 	
@@ -28,6 +29,7 @@ public class PlayerManager {
 	public static boolean addPlayerToList(PlayerData pd) {
 		UUID playerID = pd.getPlayerID();
 		pl.put(playerID, pd);
+		players.add(pd);
 		
 		return true;
 	}
@@ -63,7 +65,7 @@ public class PlayerManager {
 		for (File file : files) {
 			String json = FileUtils.loadContent(file);
 			PlayerData pd = pdsm.deserialise(json);
-			Main.players.put(pd.getPlayerID(), pd);
+			pl.put(pd.getPlayerID(), pd);
 		}
 		
 		return true;
@@ -72,11 +74,18 @@ public class PlayerManager {
 	
 	public static PlayerData getPlayerByName(String playerName) {
 		UUID playerID;
-		playerNames.clear(); //clearing array list from older operation
+		players.clear(); //clearing array list from older operation
+		PlayerData playerTempData;
 		
-		pl.forEach((pId, pd) -> playerNames.add(pd)); //putting in array list all the loading playerData
+		pl.forEach((pId, pd) -> players.add(pd)); //putting in array list all the loading playerData
 		
-		//sacn all playerData to get the right name, and return it
+		//scan all playerData to get the right name, and return it
+		for (int i=0; i<=players.size(); i++) {
+			playerTempData = players.get(i);
+			if (playerTempData.getPlayerName() == playerName) {
+				return playerTempData;
+			}
+		}
 		
 		return null;
 	}
