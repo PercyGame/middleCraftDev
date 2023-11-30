@@ -23,8 +23,8 @@ public class PlayerManager {
 	
 	
 	public PlayerManager(Plugin plugin) {
-		 saveDir = new File(plugin.getDataFolder(), "/playerData/");
-	}
+		saveDir = new File(plugin.getDataFolder(), "/playerData/");
+	}	
 	
 	public static boolean addPlayerToList(PlayerData pd) {
 		UUID playerID = pd.getPlayerID();
@@ -62,31 +62,33 @@ public class PlayerManager {
 		
 		File[] files = saveDir.listFiles();
 		
-		for (File file : files) {
-			String json = FileUtils.loadContent(file);
-			PlayerData pd = pdsm.deserialise(json);
-			pl.put(pd.getPlayerID(), pd);
+		if (!files.equals(null)) {
+			for (File file : files) {
+				String json = FileUtils.loadContent(file);
+				PlayerData pd = pdsm.deserialise(json);
+				pl.put(pd.getPlayerID(), pd);
+			}
+			
+			return true;
 		}
+		return false;
 		
-		return true;
 	}
 	
 	
 	public static PlayerData getPlayerByName(String playerName) {
-		UUID playerID;
 		players.clear(); //clearing array list from older operation
 		PlayerData playerTempData;
 		
 		pl.forEach((pId, pd) -> players.add(pd)); //putting in array list all the loading playerData
-		
+				
 		//scan all playerData to get the right name, and return it
-		for (int i=0; i<=players.size(); i++) {
+		for (int i=0; i<players.size(); i=i+1) {
 			playerTempData = players.get(i);
-			if (playerTempData.getPlayerName() == playerName) {
+			if (playerTempData.getPlayerName().equals(playerName)) {
 				return playerTempData;
 			}
 		}
-		
 		return null;
 	}
 	
