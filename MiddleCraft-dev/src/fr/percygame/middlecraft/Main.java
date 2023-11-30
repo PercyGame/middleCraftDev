@@ -11,6 +11,7 @@ import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
+import fr.percygame.middlecraft.playerManager.economieManager.OrensGiveCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
 
 public class Main extends JavaPlugin{
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PlayerManagerListener(), this);
 		
 		getCommand("pay").setExecutor(new PayCommand());
+		getCommand("orens_give").setExecutor(new OrensGiveCommand());
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		
