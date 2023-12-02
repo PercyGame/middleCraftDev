@@ -18,14 +18,14 @@ public class PlayerManagerListener implements Listener{
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if (!p.hasPlayedBefore()) {
-			PlayerData playerData = new PlayerData(p.getDisplayName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, null, Grade.PLAYER);
+			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, null, Grade.PLAYER);
 			PlayerManager.addPlayerToList(playerData);
 			System.out.println(Main.players.toString());
 		}
         
         PlayerData pd = pl.get(p.getUniqueId());
-        if (p.getDisplayName() != pd.getPlayerName()) { // check if the player change his pseudo since the last connection
-            pd.setPlayerName(p.getDisplayName());
+        if (!p.getName().equals(pd.getPlayerName())) { // check if the player change his pseudo since the last connection
+            pd.setPlayerName(p.getName());
         }
 	}
 	

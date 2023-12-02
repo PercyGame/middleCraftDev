@@ -3,6 +3,7 @@ package fr.percygame.middlecraft.playerManager.economieManager;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,6 +29,9 @@ public class PayCommand implements CommandExecutor {
 
 			TransactionManager.orensTransfer(senderData, targetData, orensValue);
 			sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + orensValue + " ¤" + " --> " + ChatColor.DARK_PURPLE + targetName);
+			Player target = Bukkit.getPlayer(targetData.getPlayerID());
+			target.sendMessage("[" + ChatColor.DARK_GREEN + "+" + ChatColor.RESET + orensValue + " ¤" + " <-- " + ChatColor.DARK_PURPLE + senderData.getPlayerName());
+			
 			return true;
 		}
 		return false;		
