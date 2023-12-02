@@ -12,6 +12,7 @@ import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensGiveCommand;
+import fr.percygame.middlecraft.playerManager.economieManager.OrensWithdrawCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
 
 public class Main extends JavaPlugin{
@@ -34,6 +35,7 @@ public class Main extends JavaPlugin{
 		
 		getCommand("pay").setExecutor(new PayCommand());
 		getCommand("orens_give").setExecutor(new OrensGiveCommand());
+		getCommand("orens_withdraw").setExecutor(new OrensWithdrawCommand());
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		

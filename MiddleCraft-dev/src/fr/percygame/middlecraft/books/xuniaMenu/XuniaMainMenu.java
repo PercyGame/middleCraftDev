@@ -10,7 +10,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class XuniaMainMenu {
 	
 	public static Inventory createCodexXuniaMenu() {
-		Inventory i = Bukkit.createInventory(null, 45, ChatColor.GOLD + "Codex Xunia");
+		String invTitle = "Codex Xunia";
+		Inventory i = Bukkit.createInventory(null, 45, ChatColor.GOLD + invTitle);
 		
 		ItemStack glass = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
 		

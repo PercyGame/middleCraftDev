@@ -39,6 +39,7 @@ public class XuniaListener implements Listener {
 		p.sendMessage("ok");
 		
 		if (inv.equals(XuniaMainMenu.createCodexXuniaMenu())) {
+			System.out.println("Codex Xunia");
 			if (clicked.equals(XuniaMainMenu.createCraftButton())) {
 				p.sendMessage("Craft");
 			}

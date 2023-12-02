@@ -3,8 +3,6 @@ package fr.percygame.middlecraft.playerManager.economieManager;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
-
 import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
@@ -29,28 +27,28 @@ public class TransactionManager {
 		}
 	}
 	
-	public static boolean orensGive(Player target, int orensValue) {
-		UUID targetId = target.getUniqueId();
-		PlayerData targetPD = pl.get(targetId);
-		int targetBalance = targetPD.getPlayerBalance();
+	public static boolean orensGive(PlayerData target, int orensValue) {
+		int targetBalance = target.getPlayerBalance();
 		
-		targetPD.setPlayerBalance(targetBalance += orensValue);
+		target.setPlayerBalance(targetBalance += orensValue);
 		
 		return true;
 	}
 	
-	public static boolean orensWithdraw(Player target, int orensValue) {
-		UUID targetId = target.getUniqueId();
-		PlayerData targetPD = pl.get(targetId);
-		int targetBalance = targetPD.getPlayerBalance();
+	public static boolean orensWithdraw(PlayerData target, int orensValue, boolean allowSubZero) {
+		int targetBalance = target.getPlayerBalance();
 		
 		if(targetBalance >= orensValue) {
-			targetPD.setPlayerBalance(targetBalance -= orensValue);
+			target.setPlayerBalance(targetBalance -= orensValue);
 			return true;
 		}
 		else {
-			targetPD.setPlayerBalance(0);
-			return true;
+			if(allowSubZero) {
+				target.setPlayerBalance(0);
+				return true;
+			}
+			return false;
+			
 		}
 	}
 	
