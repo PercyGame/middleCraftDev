@@ -9,6 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class XuniaMainMenu {
 	
+	static int craftButton = 10;
+	
 	public static Inventory createCodexXuniaMenu() {
 		String invTitle = "Codex Xunia";
 		Inventory i = Bukkit.createInventory(null, 45, ChatColor.GOLD + invTitle);
@@ -39,7 +41,7 @@ public class XuniaMainMenu {
 		//co des items possibles : 10 12 14 16
 		//						   28 30 32 34
 		
-		i.setItem(10, createCraftButton());
+		i.setItem(craftButton, createCraftButton());
 		
 		return i;		
 	}
