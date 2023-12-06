@@ -1,12 +1,10 @@
 package fr.percygame.middlecraft.playerManager;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerData implements Serializable {
+public class PlayerData {
 	
-	private static final long serialVersionUID = 1L;
 	private String playerName;
 	private UUID playerID;
 	private Rank playerRank;

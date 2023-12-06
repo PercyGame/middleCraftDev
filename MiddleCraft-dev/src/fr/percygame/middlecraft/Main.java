@@ -1,5 +1,6 @@
 package fr.percygame.middlecraft;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,11 +15,13 @@ import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensGiveCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensWithdrawCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
+import fr.percygame.middlecraft.town.TownData;
 
 public class Main extends JavaPlugin{
 	
 	Plugin INSTANCE;
 	public static Map<UUID, PlayerData> players = new HashMap<>();
+	public static Map<String, TownData> towns = new HashMap<>();
 	
 	public Main() {
 		this.INSTANCE = this;
@@ -40,12 +43,13 @@ public class Main extends JavaPlugin{
 		CustomItemsManagers.createCrafts(INSTANCE);
 		
 		PlayerManager.loadPlayers();
+		//TownManager.LoadTown();
 		
 	}
 	
 	@Override
 	public void onDisable() {
-		if(PlayerManager.savePlayers()) {
+		if(PlayerManager.savePlayers()) { //saving players data, and checking if everything happened well
 			System.out.println("Players data succefuly saved");
 		}
 		else {
