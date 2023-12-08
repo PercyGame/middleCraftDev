@@ -3,6 +3,7 @@ package fr.percygame.middlecraft;
 import java.util.Random;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -10,7 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+
 //import fr.percygame.middlecraft.books.CodexXunia;
 import fr.percygame.middlecraft.ressources.Silver;
 
@@ -46,5 +50,17 @@ public class MCDListener implements Listener {
 				}
 			}
 		}
-	}	
+	}
+	
+	@EventHandler
+	public void onHarvesting(PlayerHarvestBlockEvent e) {
+		Player p = e.getPlayer();
+		Location loc = e.getHarvestedBlock().getLocation();
+		if (p.getInventory().getItemInMainHand().equals(new ItemStack(Material.DIAMOND_HOE))) {
+			if (p.getInventory().contains(new ItemStack(Material.WHEAT_SEEDS))) {
+				p.getInventory().remove(new ItemStack(Material.WHEAT_SEEDS));
+				//add code to place the new crops
+			}
+		}
+	}
 }
