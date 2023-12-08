@@ -1,6 +1,8 @@
 package fr.percygame.middlecraft;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,6 +19,8 @@ import fr.percygame.middlecraft.playerManager.economieManager.OrensGiveCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensWithdrawCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
 import fr.percygame.middlecraft.town.TownData;
+import fr.percygame.middlecraft.town.TownManager;
+import fr.percygame.middlecraft.town.TownyCommand;
 
 public class Main extends JavaPlugin{
 	
@@ -24,6 +28,7 @@ public class Main extends JavaPlugin{
 	public static Map<UUID, PlayerData> players = new HashMap<>();
 	public static Map<String, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
+	public static List<String> test = new ArrayList<>();
 	
 	public Main() {
 		this.INSTANCE = this;
@@ -32,7 +37,10 @@ public class Main extends JavaPlugin{
 	@Override
 	public void onEnable() {
 		System.out.println("MiddleCraft dev is starting...");
+		System.out.println(test.isEmpty());
+		System.out.println(test);
 		new PlayerManager(INSTANCE);
+		new TownManager(INSTANCE);
 		
 		getServer().getPluginManager().registerEvents(new MCDListener(), this);
 		getServer().getPluginManager().registerEvents(new XuniaListener(), this);
@@ -41,6 +49,7 @@ public class Main extends JavaPlugin{
 		getCommand("pay").setExecutor(new PayCommand());
 		getCommand("orens_give").setExecutor(new OrensGiveCommand());
 		getCommand("orens_withdraw").setExecutor(new OrensWithdrawCommand());
+		getCommand("t").setExecutor(new TownyCommand());
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
 		
@@ -51,7 +60,7 @@ public class Main extends JavaPlugin{
 		}
 		
 		PlayerManager.loadPlayers();
-		//TownManager.LoadTown();
+		TownManager.loadTowns();
 		
 	}
 	
@@ -62,6 +71,13 @@ public class Main extends JavaPlugin{
 		}
 		else {
 			System.out.println("Error during players data saving");
+		}
+		
+		if(TownManager.saveTowns()) {
+			System.out.println("Town data succefuly saved");
+		}
+		else {
+			System.out.println("Error during towns data saving");
 		}
 	}
 

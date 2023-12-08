@@ -1,5 +1,6 @@
 package fr.percygame.middlecraft.playerManager;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class PlayerManagerListener implements Listener{
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if (!p.hasPlayedBefore()) {
-			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, null, Grade.PLAYER);
+			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, new ArrayList<String>(), Grade.PLAYER);
 			PlayerManager.addPlayerToList(playerData);
 			System.out.println(Main.players.toString());
 		}

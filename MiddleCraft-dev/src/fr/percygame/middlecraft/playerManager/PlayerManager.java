@@ -49,7 +49,7 @@ public class PlayerManager {
 		return true;
 	}
 	
-	//function to save all player
+	//function to save all players
 	public static boolean savePlayers() {
 		//always use try catch when dealing with files
 		try {
@@ -95,6 +95,21 @@ public class PlayerManager {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean addUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, String townName) {
+		
+		if (!pd.getPlayerTown().equals(townName)) {//check if the player specified is in the town, to avoid blocking him accessing one of his chunk
+			pd.addUnaccessibleChunkID(chunkID);//adding the chunk to the player unaccessible chunk
+		}
+		return true;
+	}
+	
+	public static boolean addUnaccessibleChunkToAllPlayers(String chunkID, String townName) {
+		
+		pl.forEach((pId, pd) -> addUnaccessibleChunkToPlayer(pd, chunkID, townName));
+		
+		return true;
 	}
 	
 }

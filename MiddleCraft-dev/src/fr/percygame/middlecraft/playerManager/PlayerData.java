@@ -1,6 +1,6 @@
 package fr.percygame.middlecraft.playerManager;
 
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerData {
@@ -10,25 +10,25 @@ public class PlayerData {
 	private Rank playerRank;
 	private String playerTown;
 	private int playerBalance;
-	private Map<String, Boolean> accessibleChunckID;
+	private List<String> unaccessibleChunckID;
 	private Grade playerGrade;
 	
 	
-	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, Map<String, Boolean> accessibleChunkID,
+	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, List<String> unaccessibleChunkID,
 			Grade playerGrade) {
 		this.playerName = playerName;
 		this.playerID = playerID;
 		this.playerRank = playerRank;
 		this.playerTown = playerTown;
 		this.playerBalance = playerBalance;
-		this.accessibleChunckID = accessibleChunkID;
+		this.unaccessibleChunckID = unaccessibleChunkID;
 		this.playerGrade = playerGrade;
 		
 	}
 
 	
 	//get and set for each value
-
+	
 	public String getPlayerName() {
 		return playerName;
 	}
@@ -72,20 +72,25 @@ public class PlayerData {
 	public int getPlayerBalance() {
 		return playerBalance;
 	}
+	
+	
+	public List<String> getUnaccessibleChunckID() {
+		return unaccessibleChunckID;
+	}
 
+	
+	public void setUnaccessibleChunckID(List<String> unaccessibleChunckID) {
+		this.unaccessibleChunckID = unaccessibleChunckID;
+	}
+	
+	
+	public void addUnaccessibleChunkID(String chunkID) {
+		this.unaccessibleChunckID.add(chunkID);
+	}
 
+	
 	public void setPlayerBalance(int playerBalance) {
 		this.playerBalance = playerBalance;
-	}
-
-
-	public Map<String, Boolean> getAccessibleChunckID() {
-		return accessibleChunckID;
-	}
-
-
-	public void setAccessibleChunckID(Map<String, Boolean> accessibleChunckID) {
-		this.accessibleChunckID = accessibleChunckID;
 	}
 
 
