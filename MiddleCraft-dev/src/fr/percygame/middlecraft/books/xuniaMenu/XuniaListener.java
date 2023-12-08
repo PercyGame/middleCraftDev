@@ -1,5 +1,7 @@
 package fr.percygame.middlecraft.books.xuniaMenu;
 
+import java.util.Map;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +11,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.books.CodexXunia;
 
 public class XuniaListener implements Listener {
+	
+	static Map<String, Inventory> menus = Main.menus;
 	
 	@EventHandler
 	public void onOpenCodexXunia(PlayerInteractEvent e) {
@@ -26,7 +31,7 @@ public class XuniaListener implements Listener {
 		if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
 			if (item.equals(CodexXunia.createCodexXunia())) {
 				//ouvrir le menu
-				p.openInventory(XuniaMainMenu.createCodexXuniaMenu());
+				p.openInventory(menus.get("XuniaMainMenu"));
 			}
 		}
 	}
@@ -35,12 +40,17 @@ public class XuniaListener implements Listener {
 	public void onCodexXuniaMainMenuClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
 		Inventory inv = e.getInventory();
-		p.sendMessage("ok");
 		
-		if (inv.equals(XuniaMainMenu.createCodexXuniaMenu())) {
-			System.out.println("Codex Xunia");
+		if (inv.equals(menus.get("XuniaMainMenu"))) {
 			if (e.getSlot() == XuniaMainMenu.craftButton) {
-				p.sendMessage("Craft");
+				// ouvrir le menu des crafts n°1
+				p.openInventory(menus.get("XuniaCraftMenu1"));
+			}
+		}
+		
+		if (inv.equals(menus.get("XuniaCraftMenu1"))) {
+			if (e.getSlot() == XuniaCraftMenu1.returnButton) {
+				p.openInventory(menus.get("XuniaMainMenu"));
 			}
 		}
 	}

@@ -1,13 +1,14 @@
 package fr.percygame.middlecraft;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.percygame.middlecraft.books.BooksManager;
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
@@ -22,6 +23,7 @@ public class Main extends JavaPlugin{
 	Plugin INSTANCE;
 	public static Map<UUID, PlayerData> players = new HashMap<>();
 	public static Map<String, TownData> towns = new HashMap<>();
+	public static Map<String, Inventory> menus = new HashMap<>();
 	
 	public Main() {
 		this.INSTANCE = this;
@@ -41,6 +43,12 @@ public class Main extends JavaPlugin{
 		getCommand("orens_withdraw").setExecutor(new OrensWithdrawCommand());
 		
 		CustomItemsManagers.createCrafts(INSTANCE);
+		
+		if (BooksManager.loadMenus()) {
+			System.out.println("Menus loaded");
+		}else {
+			System.out.println("Error during loading of menus");
+		}
 		
 		PlayerManager.loadPlayers();
 		//TownManager.LoadTown();

@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import fr.percygame.middlecraft.books.CodexXunia;
+//import fr.percygame.middlecraft.books.CodexXunia;
 import fr.percygame.middlecraft.ressources.Silver;
 
 public class MCDListener implements Listener {
@@ -21,7 +21,7 @@ public class MCDListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		p.getInventory().addItem(CodexXunia.createCodexXunia());
+		//p.getInventory().addItem(CodexXunia.createCodexXunia());
 		
 		// affichage d'un titre au joueur lors de la connection
 		p.sendTitle("§6MiddleCraft", "§9...Where history begin...", 10, 100, 5);
