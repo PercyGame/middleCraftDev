@@ -40,19 +40,23 @@ public class TownyCommand implements CommandExecutor {
 			
 			
 			if (cmd.equals("create")) {//check if player want to create a new town
-				if (!args[1].isBlank()) { //check if the sender specified a name for his town
-					if(senderPD.getPlayerTown().equals("Wilderness")) { //check if the player is already in a town
-						if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
-							ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
-							chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
-							TownData newTown = new TownData(args[1], sender.getUniqueId(), 9, chunks, TownRank.SETTLEMENT); // create the new tonw
-							t.put(newTown.getTownName(), newTown); // add the new town to the town list
-							senderPD.setPlayerTown(newTown.getTownName());
-							senderPD.setPlayerRank(Rank.LORD);
-							PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
-							TownManager.saveTowns(); //save all towns in files
+				if (!args[1].isBlank()) {//check if the sender specified a name for his town
+					if (sender.getWorld().getName().equals("world")) {
+						if(senderPD.getPlayerTown().equals("Wilderness")) { //check if the player is already in a town
+							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
+								ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
+								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
+								TownData newTown = new TownData(args[1], sender.getUniqueId(), 9, chunks, TownRank.SETTLEMENT); // create the new tonw
+								t.put(newTown.getTownName(), newTown); // add the new town to the town list
+								senderPD.setPlayerTown(newTown.getTownName());
+								senderPD.setPlayerRank(Rank.LORD);
+								PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
+								TownManager.saveTowns(); //save all towns in files
+								PlayerManager.savePlayers();
+							}
 						}
 					}
+					
 				}
 				else {
 					sender.sendMessage("You have to specified a name for your town");
@@ -62,25 +66,31 @@ public class TownyCommand implements CommandExecutor {
 			
 			
 			if (cmd.equals("claim")) {
-				if (!senderPD.getPlayerTown().equals("Wilderness")) {
-					if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
-						if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
-							TownData town = t.get(senderPD.getPlayerTown());
-							ChunkData cd = ChunkManager.getChunk(chunkID);
-							if(cd == null) { // check if the chunk isn't in a town
-								if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
-									ChunkData chunk = new ChunkData(chunkID, senderPD.getPlayerTown(), ChunkType.COMMON);
-									if(ChunkManager.isChunkTouchingTown(chunk, town)) {
-										town.addChunks(chunk);
-										PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
+				System.out.println(sender.getWorld().getName());
+				if (sender.getWorld().getName().equals("world")) {
+					if (!senderPD.getPlayerTown().equals("Wilderness")) {
+						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
+							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
+								TownData town = t.get(senderPD.getPlayerTown());
+								ChunkData cd = ChunkManager.getChunk(chunkID);
+								if(cd == null) { // check if the chunk isn't in a town
+									if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
+										ChunkData chunk = new ChunkData(chunkID, senderPD.getPlayerTown(), ChunkType.COMMON);
+										if(ChunkManager.isChunkTouchingTown(chunk, town)) {
+											town.addChunks(chunk);
+											PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
+											TownManager.saveTowns(); //save all towns in files
+											PlayerManager.savePlayers();
+										}
 									}
+									
+									
 								}
-								
-								
 							}
 						}
 					}
 				}
+				
 			}
 			
 			

@@ -32,9 +32,6 @@ public class ChunkManager {
 		
 		String[] chunkCo = chunkID.split("\\.", 0);
 		
-		System.out.println(chunkCo[1]);
-		System.out.println(chunkCo[0]);
-		
 		int chunkX = Integer.valueOf(chunkCo[0]);
 		int chunkZ = Integer.valueOf(chunkCo[1]);
 		

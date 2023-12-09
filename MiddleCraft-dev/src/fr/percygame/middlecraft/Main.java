@@ -19,6 +19,7 @@ import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
 import fr.percygame.middlecraft.town.TownData;
 import fr.percygame.middlecraft.town.TownManager;
 import fr.percygame.middlecraft.town.TownyCommand;
+import fr.percygame.middlecraft.town.claimInteractListener;
 
 public class Main extends JavaPlugin{
 	
@@ -39,6 +40,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new MCDListener(), this);
 		getServer().getPluginManager().registerEvents(new XuniaListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerManagerListener(), this);
+		getServer().getPluginManager().registerEvents(new claimInteractListener(), this);
 		
 		getCommand("pay").setExecutor(new PayCommand());
 		getCommand("orens_give").setExecutor(new OrensGiveCommand());
