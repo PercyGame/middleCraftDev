@@ -13,7 +13,9 @@ import org.bukkit.entity.Player;
 import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
+import fr.percygame.middlecraft.playerManager.Rank;
 import fr.percygame.middlecraft.town.chunkManager.ChunkData;
+import fr.percygame.middlecraft.town.chunkManager.ChunkManager;
 import fr.percygame.middlecraft.town.chunkManager.ChunkType;
 
 public class TownyCommand implements CommandExecutor {
@@ -46,7 +48,9 @@ public class TownyCommand implements CommandExecutor {
 							TownData newTown = new TownData(args[1], sender.getUniqueId(), 9, chunks, TownRank.SETTLEMENT); // create the new tonw
 							t.put(newTown.getTownName(), newTown); // add the new town to the town list
 							senderPD.setPlayerTown(newTown.getTownName());
+							senderPD.setPlayerRank(Rank.LORD);
 							PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
+							TownManager.saveTowns(); //save all towns in files
 						}
 					}
 				}
@@ -59,8 +63,22 @@ public class TownyCommand implements CommandExecutor {
 			
 			if (cmd.equals("claim")) {
 				if (!senderPD.getPlayerTown().equals("Wilderness")) {
-					if (t.get(senderPD.getPlayerName()).getOwnerID().equals(senderPD.getPlayerID())) { //check if the sender is the owner of his town
-						//to code ...
+					if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
+						if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
+							TownData town = t.get(senderPD.getPlayerTown());
+							ChunkData cd = ChunkManager.getChunk(chunkID);
+							if(cd == null) { // check if the chunk isn't in a town
+								if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
+									ChunkData chunk = new ChunkData(chunkID, senderPD.getPlayerTown(), ChunkType.COMMON);
+									if(ChunkManager.isChunkTouchingTown(chunk, town)) {
+										town.addChunks(chunk);
+										PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
+									}
+								}
+								
+								
+							}
+						}
 					}
 				}
 			}

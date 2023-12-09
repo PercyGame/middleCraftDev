@@ -1,8 +1,6 @@
 package fr.percygame.middlecraft;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +26,6 @@ public class Main extends JavaPlugin{
 	public static Map<UUID, PlayerData> players = new HashMap<>();
 	public static Map<String, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
-	public static List<String> test = new ArrayList<>();
 	
 	public Main() {
 		this.INSTANCE = this;
@@ -36,9 +33,6 @@ public class Main extends JavaPlugin{
 	
 	@Override
 	public void onEnable() {
-		System.out.println("MiddleCraft dev is starting...");
-		System.out.println(test.isEmpty());
-		System.out.println(test);
 		new PlayerManager(INSTANCE);
 		new TownManager(INSTANCE);
 		

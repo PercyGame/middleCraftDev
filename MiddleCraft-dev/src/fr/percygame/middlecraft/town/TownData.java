@@ -51,6 +51,10 @@ public class TownData {
 	public void setChunks(Map<String, ChunkData> chunks) {
 		this.chunks = chunks;
 	}
+	
+	public void addChunks(ChunkData chunk) {
+		this.chunks.put(chunk.getChunkID(), chunk);
+	}
 
 	public TownRank getTownRank() {
 		return townRank;
