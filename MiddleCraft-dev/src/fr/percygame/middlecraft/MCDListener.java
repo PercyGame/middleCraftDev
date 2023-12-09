@@ -52,6 +52,7 @@ public class MCDListener implements Listener {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	@EventHandler
 	public void onHarvesting(PlayerHarvestBlockEvent e) {
 		Player p = e.getPlayer();

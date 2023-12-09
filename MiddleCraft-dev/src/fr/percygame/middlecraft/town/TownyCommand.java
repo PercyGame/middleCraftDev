@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +16,7 @@ import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.Rank;
+import fr.percygame.middlecraft.playerManager.economieManager.TransactionManager;
 import fr.percygame.middlecraft.town.chunkManager.ChunkData;
 import fr.percygame.middlecraft.town.chunkManager.ChunkManager;
 import fr.percygame.middlecraft.town.chunkManager.ChunkType;
@@ -47,12 +50,22 @@ public class TownyCommand implements CommandExecutor {
 								ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
 								TownData newTown = new TownData(args[1], sender.getUniqueId(), 9, chunks, TownRank.SETTLEMENT); // create the new tonw
-								t.put(newTown.getTownName(), newTown); // add the new town to the town list
-								senderPD.setPlayerTown(newTown.getTownName());
-								senderPD.setPlayerRank(Rank.LORD);
-								PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
-								TownManager.saveTowns(); //save all towns in files
-								PlayerManager.savePlayers();
+								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
+									t.put(newTown.getTownName(), newTown); // add the new town to the town list
+									senderPD.setPlayerTown(newTown.getTownName());
+									senderPD.setPlayerRank(Rank.LORD);
+									PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
+									TownManager.saveTowns(); //save all towns in files
+									PlayerManager.savePlayers();
+									sender.sendMessage("Congratulation !");
+									sender.sendMessage("You've just created " + ChatColor.AQUA + newTown.getTownName());
+									sender.playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+								}
+								else {
+									sender.sendMessage(ChatColor.RED + "You need 100¤ to create a new town");
+									sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
+								}
+								
 							}
 						}
 					}
@@ -77,13 +90,25 @@ public class TownyCommand implements CommandExecutor {
 									if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
 										ChunkData chunk = new ChunkData(chunkID, senderPD.getPlayerTown(), ChunkType.COMMON);
 										if(ChunkManager.isChunkTouchingTown(chunk, town)) {
-											town.addChunks(chunk);
-											PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
-											TownManager.saveTowns(); //save all towns in files
-											PlayerManager.savePlayers();
+											int cost = (int) (100*Math.E*((town.getChunks().size()-10)/8));
+											if(TransactionManager.orensWithdraw(senderPD, cost, false)) {
+												town.addChunks(chunk);
+												PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
+												TownManager.saveTowns(); //save all towns in files
+												PlayerManager.savePlayers();
+											}
+											else {
+												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
+												sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
+											}
+											
 										}
 									}
-									
+									else {
+										sender.sendMessage("Your town hit it claim limit.");
+										sender.sendMessage("You can't claim new chunks now");
+										sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
+									}
 									
 								}
 							}

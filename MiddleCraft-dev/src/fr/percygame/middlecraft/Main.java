@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.percygame.middlecraft.books.BooksManager;
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
@@ -57,6 +58,30 @@ public class Main extends JavaPlugin{
 		
 		PlayerManager.loadPlayers();
 		TownManager.loadTowns();
+		
+		
+		//to save data every X time
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				if(PlayerManager.savePlayers()) { //saving players data, and checking if everything happened well
+					System.out.println("Players data succefuly saved");
+				}
+				else {
+					System.out.println("Error during players data saving");
+				}
+				
+				if(TownManager.saveTowns()) {
+					System.out.println("Town data succefuly saved");
+				}
+				else {
+					System.out.println("Error during towns data saving");
+				}
+				
+			}
+		}.runTaskTimerAsynchronously(INSTANCE, 0, 20*60*10);// run saving data every 10min, using an other thread
+		
 		
 	}
 	
