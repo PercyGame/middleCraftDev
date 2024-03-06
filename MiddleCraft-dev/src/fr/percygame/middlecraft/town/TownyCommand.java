@@ -122,6 +122,12 @@ public class TownyCommand implements CommandExecutor {
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
 					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD)) { // check if the sender is king or lord (officier can't unclaim)
+							ChunkData cd = ChunkManager.getChunk(chunkID);
+							if (cd != null) {
+								if (senderPD.getPlayerTown().equals(cd.getTown())) {
+									// code to remove chunk from all player's unaccessible chunk list and delete chunkdata file
+								}	
+							}
 							
 						}
 					}
