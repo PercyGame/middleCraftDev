@@ -39,8 +39,7 @@ public class TownyCommand implements CommandExecutor {
 			String chunkID = currentPlayerChunk.getX() + "." + currentPlayerChunk.getZ();
 			
 			Map<String, ChunkData> chunks = new HashMap<>();
-			
-			
+						
 			
 			if (cmd.equals("create")) {//check if player want to create a new town
 				if (!args[1].isBlank()) {//check if the sender specified a name for his town
@@ -62,7 +61,7 @@ public class TownyCommand implements CommandExecutor {
 									sender.playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
 								}
 								else {
-									sender.sendMessage(ChatColor.RED + "You need 100¤ to create a new town");
+									sender.sendMessage(ChatColor.RED + "You need 100Â¤ to create a new town");
 									sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
 								}
 								
@@ -78,6 +77,7 @@ public class TownyCommand implements CommandExecutor {
 			}
 			
 			
+			
 			if (cmd.equals("claim")) {
 				System.out.println(sender.getWorld().getName());
 				if (sender.getWorld().getName().equals("world")) {
@@ -90,7 +90,7 @@ public class TownyCommand implements CommandExecutor {
 									if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
 										ChunkData chunk = new ChunkData(chunkID, senderPD.getPlayerTown(), ChunkType.COMMON);
 										if(ChunkManager.isChunkTouchingTown(chunk, town)) {
-											int cost = (int) (100*Math.E*((town.getChunks().size()-10)/8));
+											int cost = (int) (100*Math.exp(town.getChunks().size()-10/8));
 											if(TransactionManager.orensWithdraw(senderPD, cost, false)) {
 												town.addChunks(chunk);
 												PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
@@ -98,7 +98,7 @@ public class TownyCommand implements CommandExecutor {
 												PlayerManager.savePlayers();
 											}
 											else {
-												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
+												sender.sendMessage("You need " + cost + "Â¤ to claim new chunks");
 												sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
 											}
 											
@@ -116,6 +116,16 @@ public class TownyCommand implements CommandExecutor {
 					}
 				}
 				
+			}
+			
+			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
+				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
+					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
+						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD)) { // check if the sender is king or lord (officier can't unclaim)
+							
+						}
+					}
+				}
 			}
 			
 			
