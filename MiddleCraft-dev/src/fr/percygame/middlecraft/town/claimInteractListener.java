@@ -19,15 +19,18 @@ public class claimInteractListener implements Listener {
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		Player p = e.getPlayer();
-		PlayerData pd = pl.get(p.getUniqueId());
-		List<String> chunks = pd.getUnaccessibleChunckID();
-		Chunk loc = e.getClickedBlock().getChunk();
-		String chunkId = loc.getX() + "." + loc.getZ();
-		
-		if(chunks.contains(chunkId)) {
-			e.setCancelled(true);
+		if (e.getClickedBlock() != null) {
+			Player p = e.getPlayer();
+			PlayerData pd = pl.get(p.getUniqueId());
+			List<String> chunks = pd.getUnaccessibleChunckID();
+			Chunk loc = e.getClickedBlock().getChunk();
+			String chunkId = loc.getX() + "." + loc.getZ();
+			
+			if(chunks.contains(chunkId)) {
+				e.setCancelled(true);
+			}	
 		}
+		
 		
 	}
 	
