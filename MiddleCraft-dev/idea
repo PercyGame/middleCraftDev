@@ -1,6 +1,7 @@
 - use essence (or stuff like that) in off hand while shooting to give effect to the arrow
 - create a variety of bow that have each à special power
 - create a side menu to display various info to the player
-- create extremly rare item  that players will have to hunter, like quest, with, on the item, the "version" (=the number of item like this one founded before) and the hunter name (=the name of the first player to found it
+- create extremely rare item  that players will have to hunter, like quest, with, on the item, the "version" (=the number of item like this one founded before) and the hunter name (=the name of the first player to found it
 - create a real money system, each player can get some money on their balance and convert it into item. Each item should have a special flag, to avoid duplication, and a value (=quantity of orens inside)
 - create silver stuff that is particulary powerful against undead mobs
+- For the brokilon bow, when the arrow hit a block, create a dome of green glass (70%) and foliage (30%). This block should be unbreakable during 5s, then breakable during 5s seconds, and then, the remaining ones break themselves

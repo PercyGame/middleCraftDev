@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class BowListener implements Listener {
 				//if the arrow come from a brokilon bow
 				if(arrows.get(arrow.getUniqueId()) == ArrowsEffects.BROKILON) {
 					// put here code to execute when an brokilon bow shooted arrow land
-					if (e.getHitEntity() != null) {
+					if (e.getHitEntity() != null && e.getEntity() instanceof Player) {
 						Player target = (Player) e.getHitEntity();
 						target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
 						target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 4));
@@ -43,8 +44,9 @@ public class BowListener implements Listener {
 					else if (e.getHitBlock() != null) {
 						Block target = e.getHitBlock();
 						shooter.sendMessage("YOU HAVE TO HANDLE THIS PART OF THE CODE");
-						Location targetLoc = target.getLocation();
-						System.out.println(targetLoc.getBlock().getType());
+						Location loc = target.getLocation();
+						Location newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+1, loc.getZ());
+						newLoc.getBlock().setType(Material.GREEN_STAINED_GLASS);
 					}
 				}
 			}
