@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.percygame.middlecraft.books.BooksManager;
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
+import fr.percygame.middlecraft.bows.BowListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
@@ -42,6 +43,7 @@ public class Main extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new XuniaListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerManagerListener(), this);
 		getServer().getPluginManager().registerEvents(new claimInteractListener(), this);
+		getServer().getPluginManager().registerEvents(new BowListener(), this);
 		
 		getCommand("pay").setExecutor(new PayCommand());
 		getCommand("orens_give").setExecutor(new OrensGiveCommand());

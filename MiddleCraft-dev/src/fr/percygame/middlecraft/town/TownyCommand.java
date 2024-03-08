@@ -2,6 +2,7 @@ package fr.percygame.middlecraft.town;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,7 +49,7 @@ public class TownyCommand implements CommandExecutor {
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
 								ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
-								TownData newTown = new TownData(args[1], sender.getUniqueId(), 9, chunks, TownRank.SETTLEMENT); // create the new tonw
+								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
 									t.put(newTown.getTownName(), newTown); // add the new town to the town list
 									senderPD.setPlayerTown(newTown.getTownName());

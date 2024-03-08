@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.percygame.middlecraft.bows.BrokilonBow;
 //import fr.percygame.middlecraft.books.CodexXunia;
 import fr.percygame.middlecraft.ressources.Silver;
 
@@ -28,8 +29,9 @@ public class MCDListener implements Listener {
 		//p.getInventory().addItem(CodexXunia.createCodexXunia());
 		
 		// affichage d'un titre au joueur lors de la connection
-		p.sendTitle("ง6MiddleCraft", "ง9...Where history begin...", 10, 100, 5);
+		p.sendTitle("ยง6MiddleCraft", "ยง9...Where history begin...", 10, 100, 5);
 		p.playSound(p.getLocation(), Sound.ENTITY_ENDER_EYE_DEATH, 1f, 1f);
+		p.getInventory().addItem(BrokilonBow.createBrokilonBow());
 	}
 	
 	@EventHandler
