@@ -15,8 +15,6 @@ public class TransactionManager {
 	static Map<UUID, PlayerData> pl = Main.players;
 	
 	public static boolean orensTransfer(PlayerData sender, PlayerData reciver, int orensValue) {
-		PlayerScoreboard.createScoreboard(Bukkit.getPlayer(sender.getPlayerID()));
-		PlayerScoreboard.createScoreboard(Bukkit.getPlayer(reciver.getPlayerID()));
 		int senderBalance = sender.getPlayerBalance();
 		int reciverBalance = reciver.getPlayerBalance();
 		
@@ -24,6 +22,8 @@ public class TransactionManager {
 			sender.setPlayerBalance(senderBalance -= orensValue);
 			reciver.setPlayerBalance(reciverBalance += orensValue);
 			PlayerManager.savePlayers(); //save players data after each transaction
+			PlayerScoreboard.createScoreboard(Bukkit.getPlayer(sender.getPlayerID()));
+			PlayerScoreboard.createScoreboard(Bukkit.getPlayer(reciver.getPlayerID()));
 			return true;
 		}
 		else {
@@ -32,25 +32,25 @@ public class TransactionManager {
 	}
 	
 	public static boolean orensGive(PlayerData target, int orensValue) {
-		int targetBalance = target.getPlayerBalance();
-		PlayerScoreboard.createScoreboard(Bukkit.getPlayer(target.getPlayerID()));
-		
+		int targetBalance = target.getPlayerBalance();		
 		target.setPlayerBalance(targetBalance += orensValue);
+		PlayerScoreboard.createScoreboard(Bukkit.getPlayer(target.getPlayerID()));
 		
 		return true;
 	}
 	
 	public static boolean orensWithdraw(PlayerData target, int orensValue, boolean allowSubZero) {
 		int targetBalance = target.getPlayerBalance();
-		PlayerScoreboard.createScoreboard(Bukkit.getPlayer(target.getPlayerID()));
 		
 		if(targetBalance >= orensValue) {
 			target.setPlayerBalance(targetBalance -= orensValue);
+			PlayerScoreboard.createScoreboard(Bukkit.getPlayer(target.getPlayerID()));
 			return true;
 		}
 		else {
 			if(allowSubZero) {
 				target.setPlayerBalance(0);
+				PlayerScoreboard.createScoreboard(Bukkit.getPlayer(target.getPlayerID()));
 				return true;
 			}
 			return false;

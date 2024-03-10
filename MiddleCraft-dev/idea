@@ -5,3 +5,4 @@
 - create a real money system, each player can get some money on their balance and convert it into item. Each item should have a special flag, to avoid duplication, and a value (=quantity of orens inside)
 - create silver stuff that is particulary powerful against undead mobs
 - For the brokilon bow, when the arrow hit a block, create a dome of green glass (70%) and foliage (30%). This block should be unbreakable during 5s, then breakable during 5s seconds, and then, the remaining ones break themselves
+- create a command to allow player to get out a town if they are stuck in it.
