@@ -1,7 +1,6 @@
 package fr.percygame.middlecraft.town;
 
 import java.io.File;
-import java.util.Map;
 
 import org.bukkit.plugin.Plugin;
 
@@ -13,7 +12,6 @@ public class TownManager {
 	
 
 	static File saveDir; // create the path for saving files
-	static Map<String, TownData> t = Main.towns;
 	final static TownDataSerializationManager tdsm = new TownDataSerializationManager();
 	
 	//constructor
@@ -33,7 +31,7 @@ public class TownManager {
 	public static boolean saveTowns() {
 		//always use try catch when dealing with files
 		try {
-			t.forEach((townName, td) -> saveTown(townName, td)); //for each data in t, saving it using saveTown
+			Main.towns.forEach((townName, td) -> saveTown(townName, td)); //for each data in t, saving it using saveTown
 		}
 		catch (Exception e){
 			return false; // return that something went wrong
@@ -51,7 +49,7 @@ public class TownManager {
 				for (File file : files) { //do the following actions for each files
 					String json = FileUtils.loadContent(file); //read data stored in file
 					TownData td = tdsm.deserialise(json); //convert data readed into TownData object
-					t.put(td.getTownName(), td); //add converted data to the Map pl 
+					Main.towns.put(td.getTownName(), td); //add converted data to the Map pl 
 				}
 					
 				return true; //return that every thing happened well

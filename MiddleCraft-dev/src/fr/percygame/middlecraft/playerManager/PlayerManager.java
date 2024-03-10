@@ -3,7 +3,6 @@ package fr.percygame.middlecraft.playerManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.plugin.Plugin;
@@ -14,9 +13,6 @@ import fr.percygame.middlecraft.utils.PlayerDataSerealizationManager;
 
 public class PlayerManager {
 	
-	
-	
-	static Map<UUID, PlayerData> pl = Main.players; //get players Map from Main
 	public static List<PlayerData> players = new ArrayList<PlayerData>(); //create List of players
 	static File saveDir; // create the path for saving files
 	final static PlayerDataSerealizationManager pdsm = new PlayerDataSerealizationManager(); // create a instance of the class in charge to (JSON)serialize data
@@ -29,7 +25,7 @@ public class PlayerManager {
 	// function to add a new player to map(for when a player connect for the first time)
 	public static boolean addPlayerToList(PlayerData pd) {
 		UUID playerID = pd.getPlayerID(); //get the id of the player
-		pl.put(playerID, pd); //add the playerData given in arg to the map
+		Main.players.put(playerID, pd); //add the playerData given in arg to the map
 		players.add(pd); //add the playerData to the list (only for this class purpose)
 		
 		return true; //return that everything happened find
@@ -37,7 +33,7 @@ public class PlayerManager {
 	
 	// function to get a player from the Map pl
 	public static PlayerData getPlayerFromList(UUID playerUUID) { // take player id in arg
-		PlayerData playerData = pl.get(playerUUID); // create the instance of playerData that will hold data
+		PlayerData playerData = Main.players.get(playerUUID); // create the instance of playerData that will hold data
 		return playerData; //return it
 	}
 	
@@ -53,7 +49,7 @@ public class PlayerManager {
 	public static boolean savePlayers() {
 		//always use try catch when dealing with files
 		try {
-			pl.forEach((pId, pd) -> savePlayer(pId, pd)); //for each data in pl, saving it using savePlayer
+			Main.players.forEach((pId, pd) -> savePlayer(pId, pd)); //for each data in pl, saving it using savePlayer
 		}
 		catch (Exception e){
 			return false; // return that something went wrong
@@ -71,7 +67,8 @@ public class PlayerManager {
 			for (File file : files) { //do the following actions for each files
 				String json = FileUtils.loadContent(file); //read data stored in file
 				PlayerData pd = pdsm.deserialise(json); //convert data readed into PlayerData object
-				pl.put(pd.getPlayerID(), pd); //add converted data to the Map pl 
+				Main.players.put(pd.getPlayerID(), pd); //add converted data to the Map pl 
+				Main.tempPlayerData.put(pd.getPlayerID(), new TempPlayerData(pd.getPlayerID(), pd.getChaosQtt()));
 			}
 			
 			return true; //return that every thing happened well
@@ -85,7 +82,7 @@ public class PlayerManager {
 		players.clear(); //clearing array list from older operation
 		PlayerData playerData;
 		
-		pl.forEach((pId, pd) -> players.add(pd)); //putting in array list all the loading playerData
+		Main.players.forEach((pId, pd) -> players.add(pd)); //putting in array list all the loading playerData
 				
 		//scan all playerData to get the right name, and return it
 		for (int i=0; i<players.size(); i=i+1) {
@@ -107,7 +104,7 @@ public class PlayerManager {
 	
 	public static boolean addUnaccessibleChunkToAllPlayers(String chunkID, String townName) {
 		
-		pl.forEach((pId, pd) -> addUnaccessibleChunkToPlayer(pd, chunkID, townName));
+		Main.players.forEach((pId, pd) -> addUnaccessibleChunkToPlayer(pd, chunkID, townName));
 		
 		return true;
 	}

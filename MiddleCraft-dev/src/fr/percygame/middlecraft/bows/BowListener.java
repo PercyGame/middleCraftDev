@@ -1,12 +1,16 @@
 package fr.percygame.middlecraft.bows;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -21,7 +25,93 @@ import org.bukkit.potion.PotionEffectType;
 public class BowListener implements Listener {
 	
 	public static Map<UUID, ArrowsEffects> arrows = new HashMap<>();
+	private static List<Block> blocksInSphere = new ArrayList<>();
 	
+	
+	public void createSphere(Location loc, Location newLoc) {
+		for (int i=-1; i<=1; i++) {
+			newLoc = new Location(loc.getWorld(), loc.getX()+3, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+3, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+3, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+2, loc.getY()+i, loc.getZ()+2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+2, loc.getY()+i, loc.getZ()-2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-2, loc.getY()+i, loc.getZ()+2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-2, loc.getY()+i, loc.getZ()-2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-3, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-3, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()+3);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()+3);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-3, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()-3);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()+3);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()-3);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()-3);
+			blocksInSphere.add(newLoc.getBlock());
+		}
+		
+		for (int i=-2; i<=2; i+=4) {
+			newLoc = new Location(loc.getWorld(), loc.getX()+2, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+2, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+2, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-2, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-2, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-2, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()+2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()+2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()+2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()-2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()-2);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()-2);
+			blocksInSphere.add(newLoc.getBlock());
+		}
+		
+		for (int i=-3; i<=3; i+=6) {
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()+1, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ());
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX()-1, loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()+1);
+			blocksInSphere.add(newLoc.getBlock());
+			newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+i, loc.getZ()-1);
+			blocksInSphere.add(newLoc.getBlock());
+		}
+	}
 	
 	
 	@EventHandler
@@ -35,18 +125,37 @@ public class BowListener implements Listener {
 				if(arrows.get(arrow.getUniqueId()) == ArrowsEffects.BROKILON) {
 					// put here code to execute when an brokilon bow shooted arrow land
 					if (e.getHitEntity() != null && e.getEntity() instanceof Player) {
+						shooter.playSound(shooter.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 						Player target = (Player) e.getHitEntity();
 						target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
 						target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 4));
 						target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 4));
 						target.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 200, 0));
 					}
+					
+					
+					else if (e.getHitEntity() != null) {
+						Entity target = e.getEntity();
+						shooter.playSound(shooter.getLocation(), Sound.ENTITY_BREEZE_HURT, 1f, 1f);
+						target.teleport(target.getLocation().add(0, 10, 0));
+					}
+					
 					else if (e.getHitBlock() != null) {
+						shooter.playSound(shooter.getLocation(), Sound.BLOCK_VINE_BREAK, 1f, 1f);
 						Block target = e.getHitBlock();
-						shooter.sendMessage("YOU HAVE TO HANDLE THIS PART OF THE CODE");
 						Location loc = target.getLocation();
-						Location newLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+1, loc.getZ());
-						newLoc.getBlock().setType(Material.GREEN_STAINED_GLASS);
+						Location newLoc = null;
+						
+						createSphere(loc, newLoc);
+						
+						for (Block block : blocksInSphere) {
+							if (block.getType() == Material.AIR) {
+								block.setType(Material.OAK_LEAVES);
+							}
+						}
+						blocksInSphere.clear();
+						arrows.remove(arrow.getUniqueId());
+						
 					}
 				}
 			}

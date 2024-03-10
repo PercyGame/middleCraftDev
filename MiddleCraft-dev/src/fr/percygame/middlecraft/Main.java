@@ -15,6 +15,7 @@ import fr.percygame.middlecraft.bows.BowListener;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
+import fr.percygame.middlecraft.playerManager.TempPlayerData;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensGiveCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.OrensWithdrawCommand;
 import fr.percygame.middlecraft.playerManager.economieManager.PayCommand;
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin{
 	
 	Plugin INSTANCE;
 	public static Map<UUID, PlayerData> players = new HashMap<>();
+	public static Map<UUID, TempPlayerData> tempPlayerData = new HashMap<>();
 	public static Map<String, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
 	

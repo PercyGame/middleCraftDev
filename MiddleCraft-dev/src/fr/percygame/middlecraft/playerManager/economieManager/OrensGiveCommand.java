@@ -19,7 +19,7 @@ public class OrensGiveCommand implements CommandExecutor {
 		PlayerData targetPD = PlayerManager.getPlayerByName(targetName);
 		TransactionManager.orensGive(targetPD, orensValue);
 		Player target = Bukkit.getPlayer(targetPD.getPlayerName());
-		target.sendMessage("[" + ChatColor.DARK_GREEN + "+" + ChatColor.RESET + "] " + orensValue + "¤");
+		target.sendMessage("[" + ChatColor.DARK_GREEN + "+" + ChatColor.RESET + "] " + orensValue + "Â¤");
 		
 		return true;
 	}

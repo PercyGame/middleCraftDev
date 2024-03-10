@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
+import fr.percygame.middlecraft.playerManager.PlayerScoreboard;
 import fr.percygame.middlecraft.playerManager.Rank;
 import fr.percygame.middlecraft.playerManager.economieManager.TransactionManager;
 import fr.percygame.middlecraft.town.chunkManager.ChunkData;
@@ -24,9 +25,6 @@ import fr.percygame.middlecraft.town.chunkManager.ChunkType;
 
 public class TownyCommand implements CommandExecutor {
 	
-
-	static Map<String, TownData> t = Main.towns;
-
 	@Override
 	public boolean onCommand(CommandSender CS, Command command, String alias, String[] args) {
 		
@@ -51,7 +49,7 @@ public class TownyCommand implements CommandExecutor {
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
 								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
-									t.put(newTown.getTownName(), newTown); // add the new town to the town list
+									Main.towns.put(newTown.getTownName(), newTown); // add the new town to the town list
 									senderPD.setPlayerTown(newTown.getTownName());
 									senderPD.setPlayerRank(Rank.LORD);
 									PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
@@ -60,6 +58,7 @@ public class TownyCommand implements CommandExecutor {
 									sender.sendMessage("Congratulation !");
 									sender.sendMessage("You've just created " + ChatColor.AQUA + newTown.getTownName());
 									sender.playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+									PlayerScoreboard.createScoreboard(sender);
 								}
 								else {
 									sender.sendMessage(ChatColor.RED + "You need 100¤ to create a new town");
@@ -85,7 +84,7 @@ public class TownyCommand implements CommandExecutor {
 					if (!senderPD.getPlayerTown().equals("Wilderness")) {
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
-								TownData town = t.get(senderPD.getPlayerTown());
+								TownData town = Main.towns.get(senderPD.getPlayerTown());
 								ChunkData cd = ChunkManager.getChunk(chunkID);
 								if(cd == null) { // check if the chunk isn't in a town
 									if (town.getChunkLimit() > town.getChunks().size()) { //check if the town has hit it chunk limit
@@ -97,6 +96,8 @@ public class TownyCommand implements CommandExecutor {
 												PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
 												TownManager.saveTowns(); //save all towns in files
 												PlayerManager.savePlayers();
+												sender.playSound(sender, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+												PlayerScoreboard.createScoreboard(sender);
 											}
 											else {
 												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
@@ -127,6 +128,7 @@ public class TownyCommand implements CommandExecutor {
 							if (cd != null) {
 								if (senderPD.getPlayerTown().equals(cd.getTown())) {
 									// code to remove chunk from all player's unaccessible chunk list and delete chunkdata file
+									
 								}	
 							}
 							
