@@ -87,23 +87,21 @@ public class PlayerScoreboard{
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "MIDDLECRAFT");
 		
-		Score separator1 = objective.getScore("");
-		Score townDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Town " + ChatColor.RESET + "" + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerTown());
-		Score balanceDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Orens " + ChatColor.RESET + "" + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerBalance() + "¤");
+		Score townDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Town " + ChatColor.RESET + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerTown());
+		Score balanceDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Orens " + ChatColor.RESET + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerBalance() + "¤");
 		Score separator2 = objective.getScore(ChatColor.GOLD + "◈--------------◈");
 		Score chaosTitle = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Chaos");
 		Score chaosVisualGauge = objective.getScore(mapChaosToVisualGauge(player));
 		Score chaosTextualGauge = objective.getScore(ChatColor.AQUA + " " + df.format(((Main.tempPlayerData.get(player.getUniqueId()).getChaosGauge()*100))/Main.players.get(player.getUniqueId()).getChaosQtt()) + " % " + "(" + Main.tempPlayerData.get(player.getUniqueId()).getChaosGauge() +"/" + Main.players.get(player.getUniqueId()).getChaosQtt() + ")");
-		Score chaosLevel = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Level " + ChatColor.RESET + "" + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getChaosLevel());
+		Score chaosLevel = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Level " + ChatColor.RESET + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getChaosLevel());
 		
-		separator1.setScore(14);
-		townDisplay.setScore(13);
-		balanceDisplay.setScore(12);
-		separator2.setScore(11);
-		chaosTitle.setScore(10);
-		chaosVisualGauge.setScore(9);
-		chaosTextualGauge.setScore(8);
-		chaosLevel.setScore(7);
+		townDisplay.setScore(6);
+		balanceDisplay.setScore(5);
+		separator2.setScore(4);
+		chaosTitle.setScore(3);
+		chaosVisualGauge.setScore(2);
+		chaosTextualGauge.setScore(1);
+		chaosLevel.setScore(0);
 		
 		
 		player.setScoreboard(sb);
