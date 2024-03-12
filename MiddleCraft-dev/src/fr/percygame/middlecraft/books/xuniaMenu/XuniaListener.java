@@ -43,7 +43,7 @@ public class XuniaListener implements Listener {
 		
 		if (inv.equals(menus.get("XuniaMainMenu"))) {
 			if (e.getSlot() == XuniaMainMenu.craftButton) {
-				// ouvrir le menu des crafts n°1
+				// ouvrir le menu des crafts nï¿½1
 				p.openInventory(menus.get("XuniaCraftMenu1"));
 			}
 		}
