@@ -16,8 +16,8 @@ public class PlayerManagerListener implements Listener{
 		Player p = e.getPlayer();
 		if (!p.hasPlayedBefore()) {
 			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, new ArrayList<String>(), Grade.PLAYER, 0, 128);
-			PlayerManager.addPlayerToList(playerData);
-			System.out.println(Main.players.toString());
+			TempPlayerData tempPlayerData = new TempPlayerData(p.getUniqueId(), 128, null);
+			PlayerManager.addPlayerToList(playerData, tempPlayerData);
 		}
         
 		PlayerScoreboard.createScoreboard(p);

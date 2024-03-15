@@ -23,9 +23,10 @@ public class PlayerManager {
 	}	
 	
 	// function to add a new player to map(for when a player connect for the first time)
-	public static boolean addPlayerToList(PlayerData pd) {
+	public static boolean addPlayerToList(PlayerData pd, TempPlayerData tpd) {
 		UUID playerID = pd.getPlayerID(); //get the id of the player
 		Main.players.put(playerID, pd); //add the playerData given in arg to the map
+		Main.tempPlayerData.put(playerID, tpd); //add the tempPlayerData given in arg to the map
 		players.add(pd); //add the playerData to the list (only for this class purpose)
 		
 		return true; //return that everything happened find
@@ -68,7 +69,7 @@ public class PlayerManager {
 				String json = FileUtils.loadContent(file); //read data stored in file
 				PlayerData pd = pdsm.deserialise(json); //convert data readed into PlayerData object
 				Main.players.put(pd.getPlayerID(), pd); //add converted data to the Map pl 
-				Main.tempPlayerData.put(pd.getPlayerID(), new TempPlayerData(pd.getPlayerID(), pd.getChaosQtt()));
+				Main.tempPlayerData.put(pd.getPlayerID(), new TempPlayerData(pd.getPlayerID(), pd.getChaosQtt(), null));
 			}
 			
 			return true; //return that every thing happened well

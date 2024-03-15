@@ -120,6 +120,7 @@ public class TownyCommand implements CommandExecutor {
 				
 			}
 			
+			//unfinished
 			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
 					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
@@ -135,6 +136,11 @@ public class TownyCommand implements CommandExecutor {
 						}
 					}
 				}
+			}
+			
+			//unfinished
+			if (cmd.equals("")) {
+				
 			}
 			
 			

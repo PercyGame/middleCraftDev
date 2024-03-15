@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.percygame.middlecraft.books.BooksManager;
 import fr.percygame.middlecraft.books.xuniaMenu.XuniaListener;
 import fr.percygame.middlecraft.bows.BowListener;
-import fr.percygame.middlecraft.multiBlockStructures.MultiBlockStructure;
 import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerManagerListener;
@@ -32,7 +31,6 @@ public class Main extends JavaPlugin{
 	public static Map<UUID, TempPlayerData> tempPlayerData = new HashMap<>();
 	public static Map<String, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
-	public static Map<UUID, MultiBlockStructure> mbs = new HashMap<>();
 	
 	public Main() {
 		this.INSTANCE = this;
