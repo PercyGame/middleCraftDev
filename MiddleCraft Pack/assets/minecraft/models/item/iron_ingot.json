@@ -21,6 +21,12 @@
         "custom_model_data": 3
       },
       "model": "minecraft:item/silver_ingot"
+    },
+    {
+      "predicate":{
+        "custom_model_data": 4
+      },
+      "model": "minecraft:item/damas_ingot"
     }
   ]
 }
