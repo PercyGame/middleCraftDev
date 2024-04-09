@@ -91,6 +91,10 @@ public class PlayerData {
 	public void addUnaccessibleChunkID(String chunkID) {
 		this.unaccessibleChunckID.add(chunkID);
 	}
+	
+	public void removeUnaccessibleChunkID(String chunkID) {
+		this.unaccessibleChunckID.remove(chunkID);
+	}
 
 	
 	public void setPlayerBalance(int playerBalance) {

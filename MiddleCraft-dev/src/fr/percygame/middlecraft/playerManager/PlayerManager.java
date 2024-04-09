@@ -110,4 +110,16 @@ public class PlayerManager {
 		return true;
 	}
 	
+	public static boolean removeUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, String townName) {
+		if (!pd.getPlayerTown().equals(townName)) {
+			pd.removeUnaccessibleChunkID(chunkID);
+		}
+		return true;
+	}
+	
+	public static boolean removeUnaccessibleChunkToAllPlayers(String chunkID, String townName) {
+		Main.players.forEach((pId, pd) -> removeUnaccessibleChunkToPlayer(pd, chunkID, townName));
+		return true;
+	}
+	
 }

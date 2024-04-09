@@ -47,7 +47,7 @@ public class TownyCommand implements CommandExecutor {
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
 								ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
-								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT); // create the new tonw
+								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT, 0); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
 									Main.towns.put(newTown.getTownName(), newTown); // add the new town to the town list
 									senderPD.setPlayerTown(newTown.getTownName());
@@ -98,6 +98,7 @@ public class TownyCommand implements CommandExecutor {
 												PlayerManager.savePlayers();
 												sender.playSound(sender, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 												PlayerScoreboard.createScoreboard(sender);
+												sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + cost + " ¤");
 											}
 											else {
 												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
@@ -120,16 +121,16 @@ public class TownyCommand implements CommandExecutor {
 				
 			}
 			
-			//unfinished
+			
 			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
 					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD)) { // check if the sender is king or lord (officier can't unclaim)
 							ChunkData cd = ChunkManager.getChunk(chunkID);
-							if (cd != null) {
+							if (cd != null) { //check if the chunk is in a town
 								if (senderPD.getPlayerTown().equals(cd.getTown())) {
 									// code to remove chunk from all player's unaccessible chunk list and delete chunkdata file
-									
+									PlayerManager.removeUnaccessibleChunkToAllPlayers(chunkID, senderPD.getPlayerTown());
 								}	
 							}
 							

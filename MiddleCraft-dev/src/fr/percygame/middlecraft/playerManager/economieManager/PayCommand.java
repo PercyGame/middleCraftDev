@@ -28,9 +28,9 @@ public class PayCommand implements CommandExecutor {
 			PlayerData senderData = PlayerManager.getPlayerByName(sender.getName());
 
 			TransactionManager.orensTransfer(senderData, targetData, orensValue);
-			sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + orensValue + " ¤" + " --> " + ChatColor.DARK_PURPLE + targetName);
+			sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + orensValue + " Â¤" + " --> " + ChatColor.DARK_PURPLE + targetName);
 			Player target = Bukkit.getPlayer(targetData.getPlayerID());
-			target.sendMessage("[" + ChatColor.DARK_GREEN + "+" + ChatColor.RESET + orensValue + " ¤" + " <-- " + ChatColor.DARK_PURPLE + senderData.getPlayerName());
+			target.sendMessage("[" + ChatColor.DARK_GREEN + "+" + ChatColor.RESET + orensValue + " Â¤" + " <-- " + ChatColor.DARK_PURPLE + senderData.getPlayerName());
 			
 			return true;
 		}

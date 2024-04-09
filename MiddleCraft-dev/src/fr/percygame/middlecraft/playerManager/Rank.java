@@ -5,6 +5,7 @@ public enum Rank {
 	COMMONER,
 	ARISTOCRAT,
 	OFFICIER,
+	COMMANDER,
 	LORD,
 	KING;
 }

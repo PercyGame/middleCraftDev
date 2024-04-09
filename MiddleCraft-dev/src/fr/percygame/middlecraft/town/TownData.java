@@ -13,8 +13,9 @@ public class TownData {
 	private int chunkLimit; //max numbers of claimed chunk. They can be what ever type the owner want
 	private Map<String, ChunkData> chunks;
 	private TownRank townRank;
+	private int townBalance;
 	
-	public TownData(UUID id, String townName, UUID ownerID, boolean allowFightForVisitor, int chunkLimit, Map<String, ChunkData> chunks, TownRank townRank) {
+	public TownData(UUID id, String townName, UUID ownerID, boolean allowFightForVisitor, int chunkLimit, Map<String, ChunkData> chunks, TownRank townRank, int townBalance) {
 		this.id = id;
 		this.townName = townName;
 		this.ownerID = ownerID;
@@ -22,6 +23,7 @@ public class TownData {
 		this.chunkLimit = chunkLimit;
 		this.chunks = chunks;
 		this.townRank = townRank;
+		this.townBalance = townBalance;
 	}
 
 	public UUID getId() {
@@ -82,6 +84,14 @@ public class TownData {
 
 	public void setTownRank(TownRank townRank) {
 		this.townRank = townRank;
+	}
+
+	public int getTownBalance() {
+		return townBalance;
+	}
+
+	public void setTownBalance(int townBalance) {
+		this.townBalance = townBalance;
 	}
 	
 	
