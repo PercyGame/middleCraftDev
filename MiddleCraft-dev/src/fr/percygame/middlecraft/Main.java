@@ -29,7 +29,7 @@ public class Main extends JavaPlugin{
 	Plugin INSTANCE;
 	public static Map<UUID, PlayerData> players = new HashMap<>();
 	public static Map<UUID, TempPlayerData> tempPlayerData = new HashMap<>();
-	public static Map<String, TownData> towns = new HashMap<>();
+	public static Map<UUID, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
 	
 	public Main() {

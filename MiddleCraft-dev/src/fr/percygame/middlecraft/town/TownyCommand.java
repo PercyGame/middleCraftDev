@@ -18,6 +18,7 @@ import fr.percygame.middlecraft.playerManager.PlayerData;
 import fr.percygame.middlecraft.playerManager.PlayerManager;
 import fr.percygame.middlecraft.playerManager.PlayerScoreboard;
 import fr.percygame.middlecraft.playerManager.Rank;
+import fr.percygame.middlecraft.playerManager.TempPlayerData;
 import fr.percygame.middlecraft.playerManager.economieManager.TransactionManager;
 import fr.percygame.middlecraft.town.chunkManager.ChunkData;
 import fr.percygame.middlecraft.town.chunkManager.ChunkManager;
@@ -32,6 +33,7 @@ public class TownyCommand implements CommandExecutor {
 		if (CS instanceof Player) { //check if the sender is a player (not the console)
 			String cmd = args[0];
 			PlayerData senderPD = PlayerManager.getPlayerByName(CS.getName());
+			TempPlayerData senderTPD = Main.tempPlayerData.get(senderPD.getPlayerID());
 			Player sender = Bukkit.getPlayer(CS.getName());
 			Chunk currentPlayerChunk = sender.getWorld().getChunkAt(sender.getLocation());
 			
@@ -49,7 +51,7 @@ public class TownyCommand implements CommandExecutor {
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
 								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT, 0); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
-									Main.towns.put(newTown.getTownName(), newTown); // add the new town to the town list
+									Main.towns.put(newTown.getId(), newTown); // add the new town to the town list
 									senderPD.setPlayerTown(newTown.getTownName());
 									senderPD.setPlayerRank(Rank.LORD);
 									PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
@@ -99,6 +101,7 @@ public class TownyCommand implements CommandExecutor {
 												sender.playSound(sender, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 												PlayerScoreboard.createScoreboard(sender);
 												sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + cost + " ¤");
+												sender.sendMessage("You have claimed " + cd.getChunkID());
 											}
 											else {
 												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
@@ -121,7 +124,7 @@ public class TownyCommand implements CommandExecutor {
 				
 			}
 			
-			
+			//untested
 			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
 					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
@@ -131,11 +134,45 @@ public class TownyCommand implements CommandExecutor {
 								if (senderPD.getPlayerTown().equals(cd.getTown())) {
 									// code to remove chunk from all player's unaccessible chunk list and delete chunkdata file
 									PlayerManager.removeUnaccessibleChunkToAllPlayers(chunkID, senderPD.getPlayerTown());
+									sender.sendMessage("You have unclaimed " + cd.getChunkID());
 								}	
 							}
 							
 						}
 					}
+				}
+			}
+			
+			//unfinished (message sending to finish, add a massage on mailbox if the player is offline)
+			if (cmd.equals("invite")) {
+				String senderTownName = senderPD.getPlayerTown();
+				UUID senderTownId = TownManager.getTownByName(senderTownName);
+				
+				try {
+					Player target = Bukkit.getPlayer(args[1]);
+					Main.tempPlayerData.get(target.getUniqueId()).setTownInvite(senderTownId);
+					target.sendMessage("You've got an town joining invitation from the " + Main.towns.get(senderTownId).getTownRank().toString() + " " + senderTownName + " !");
+					target.sendMessage("do /t invite-accept, or /t invite-dismiss");
+				} catch (Exception e) {
+					return false;
+				}
+			}
+			
+			//unfinished
+			if (cmd.equals("invite-accept")) {
+				
+			}
+			
+			//unfinished
+			if (cmd.equals("invite-dismiss")) {
+				if(senderTPD.getTownInvite()!=null) {
+					Player owner = Bukkit.getPlayer(Main.towns.get(senderTPD.getTownInvite()).getOwnerID()); //get the player instance of the town owner, to notify him that the sender refuse his invitation
+					senderTPD.setTownInvite(null); //erase the town invitation, do delete it
+					owner.sendMessage(senderPD.getPlayerName() + " has reject your invitation :(");
+					
+				}
+				else {
+					sender.sendMessage("You do not have any invitation running :(");
 				}
 			}
 			

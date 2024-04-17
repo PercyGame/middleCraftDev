@@ -69,7 +69,7 @@ public class PlayerManager {
 				String json = FileUtils.loadContent(file); //read data stored in file
 				PlayerData pd = pdsm.deserialise(json); //convert data readed into PlayerData object
 				Main.players.put(pd.getPlayerID(), pd); //add converted data to the Map pl 
-				Main.tempPlayerData.put(pd.getPlayerID(), new TempPlayerData(pd.getPlayerID(), pd.getChaosQtt(), null));
+				Main.tempPlayerData.put(pd.getPlayerID(), new TempPlayerData(pd.getPlayerID(), pd.getChaosQtt(), null, null));
 			}
 			
 			return true; //return that every thing happened well
@@ -121,5 +121,4 @@ public class PlayerManager {
 		Main.players.forEach((pId, pd) -> removeUnaccessibleChunkToPlayer(pd, chunkID, townName));
 		return true;
 	}
-	
 }
