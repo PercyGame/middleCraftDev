@@ -164,7 +164,7 @@ public class TownyCommand implements CommandExecutor {
 				if (senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the sender is already in a town
 					senderPD.setPlayerTown(senderTPD.getTownInvite());
 					sender.sendMessage("You are know in the " + Main.towns.get(senderTPD.getTownInvite()).getTownRank() + " " + Main.towns.get(senderTPD.getTownInvite()).getTownName()); //to finish
-					//remove all unaccesible chunk from the town to the sender
+					Main.towns.get(senderPD.getPlayerTown()).getChunks().forEach((chunkId, cd) -> PlayerManager.removeUnaccessibleChunkToPlayer(senderPD, chunkId, null)); //not tested yet, could cause issus
 				}
 			}
 			
