@@ -64,7 +64,6 @@ public class TownManager {
 		
 	}
 	
-	//mainly used in the invitation command
 	public static UUID getTownByName(String townName) {
 		// cycle throught the Main.towns HashMap, to check each ones names, and return the uuid, when it has find the matching one
 		for(Map.Entry<UUID, TownData> mapEntry : Main.towns.entrySet()) {

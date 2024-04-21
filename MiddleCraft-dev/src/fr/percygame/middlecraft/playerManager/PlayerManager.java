@@ -95,30 +95,30 @@ public class PlayerManager {
 		return null;
 	}
 	
-	public static boolean addUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, String townName) {
+	public static boolean addUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, UUID townID) {
 		
-		if (!pd.getPlayerTown().equals(townName)) {//check if the player specified is in the town, to avoid blocking him accessing one of his chunk
+		if (!pd.getPlayerTown().equals(townID)) {//check if the player specified is in the town, to avoid blocking him accessing one of his chunk
 			pd.addUnaccessibleChunkID(chunkID);//adding the chunk to the player unaccessible chunk
 		}
 		return true;
 	}
 	
-	public static boolean addUnaccessibleChunkToAllPlayers(String chunkID, String townName) {
+	public static boolean addUnaccessibleChunkToAllPlayers(String chunkID, UUID townID) {
 		
-		Main.players.forEach((pId, pd) -> addUnaccessibleChunkToPlayer(pd, chunkID, townName));
+		Main.players.forEach((pId, pd) -> addUnaccessibleChunkToPlayer(pd, chunkID, townID));
 		
 		return true;
 	}
 	
-	public static boolean removeUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, String townName) {
-		if (!pd.getPlayerTown().equals(townName)) {
+	public static boolean removeUnaccessibleChunkToPlayer(PlayerData pd, String chunkID, UUID townID) {
+		if (!pd.getPlayerTown().equals(townID)) {
 			pd.removeUnaccessibleChunkID(chunkID);
 		}
 		return true;
 	}
 	
-	public static boolean removeUnaccessibleChunkToAllPlayers(String chunkID, String townName) {
-		Main.players.forEach((pId, pd) -> removeUnaccessibleChunkToPlayer(pd, chunkID, townName));
+	public static boolean removeUnaccessibleChunkToAllPlayers(String chunkID, UUID townID) {
+		Main.players.forEach((pId, pd) -> removeUnaccessibleChunkToPlayer(pd, chunkID, townID));
 		return true;
 	}
 }

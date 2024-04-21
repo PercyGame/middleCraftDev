@@ -1,13 +1,14 @@
 package fr.percygame.middlecraft.town.chunkManager;
 
 import java.util.Map;
+import java.util.UUID;
 
 import fr.percygame.middlecraft.Main;
 import fr.percygame.middlecraft.town.TownData;
 
 public class ChunkManager {
 	
-	static Map<String, TownData> t = Main.towns;
+	static Map<UUID, TownData> t = Main.towns;
 	
 	public static ChunkData getChunk(String chunkID) {
 		

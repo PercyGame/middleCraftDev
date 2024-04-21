@@ -45,16 +45,17 @@ public class TownyCommand implements CommandExecutor {
 			if (cmd.equals("create")) {//check if player want to create a new town
 				if (!args[1].isBlank()) {//check if the sender specified a name for his town
 					if (sender.getWorld().getName().equals("world")) {
-						if(senderPD.getPlayerTown().equals("Wilderness")) { //check if the player is already in a town
+						if(senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { //check if the player is already in a town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
-								ChunkData chunk = new ChunkData(chunkID, args[1], ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
+								UUID newTownId = UUID.randomUUID(); // create here to be able to use it in the chunk data creation
+								ChunkData chunk = new ChunkData(chunkID,newTownId, ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
-								TownData newTown = new TownData(UUID.randomUUID(), args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT, 0); // create the new tonw
+								TownData newTown = new TownData(newTownId, args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT, 0); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
 									Main.towns.put(newTown.getId(), newTown); // add the new town to the town list
-									senderPD.setPlayerTown(newTown.getTownName());
+									senderPD.setPlayerTown(newTown.getId());
 									senderPD.setPlayerRank(Rank.LORD);
-									PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getTownName());
+									PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, newTown.getId());
 									TownManager.saveTowns(); //save all towns in files
 									PlayerManager.savePlayers();
 									sender.sendMessage("Congratulation !");
@@ -83,7 +84,7 @@ public class TownyCommand implements CommandExecutor {
 			if (cmd.equals("claim")) {
 				System.out.println(sender.getWorld().getName());
 				if (sender.getWorld().getName().equals("world")) {
-					if (!senderPD.getPlayerTown().equals("Wilderness")) {
+					if (!senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) {
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
 								TownData town = Main.towns.get(senderPD.getPlayerTown());
@@ -95,7 +96,7 @@ public class TownyCommand implements CommandExecutor {
 											int cost = (int) (100*Math.exp(town.getChunks().size()-10/8));
 											if(TransactionManager.orensWithdraw(senderPD, cost, false)) {
 												town.addChunks(chunk);
-												PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getTownName());
+												PlayerManager.addUnaccessibleChunkToAllPlayers(chunkID, town.getId());
 												TownManager.saveTowns(); //save all towns in files
 												PlayerManager.savePlayers();
 												sender.playSound(sender, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
@@ -127,7 +128,7 @@ public class TownyCommand implements CommandExecutor {
 			//untested
 			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
-					if (!senderPD.getPlayerTown().equals("Wilderness")) { // check if the player have a town (Wilderness being default town
+					if (!senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the player have a town (Wilderness being default town
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD)) { // check if the sender is king or lord (officier can't unclaim)
 							ChunkData cd = ChunkManager.getChunk(chunkID);
 							if (cd != null) { //check if the chunk is in a town
@@ -145,8 +146,8 @@ public class TownyCommand implements CommandExecutor {
 			
 			//unfinished (message sending to finish, add a massage on mailbox if the player is offline)
 			if (cmd.equals("invite")) {
-				String senderTownName = senderPD.getPlayerTown();
-				UUID senderTownId = TownManager.getTownByName(senderTownName);
+				UUID senderTownId = senderPD.getPlayerTown();
+				String senderTownName = Main.towns.get(senderTownId).getTownName();
 				
 				try {
 					Player target = Bukkit.getPlayer(args[1]);
@@ -160,7 +161,10 @@ public class TownyCommand implements CommandExecutor {
 			
 			//unfinished
 			if (cmd.equals("invite-accept")) {
-				
+				if (senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the sender is already in a town
+					senderPD.setPlayerTown(senderTPD.getTownInvite());
+					//remove all unaccesible chunk from the town to the sender
+				}
 			}
 			
 			//unfinished

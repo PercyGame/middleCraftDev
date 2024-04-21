@@ -8,7 +8,7 @@ public class PlayerData {
 	private String playerName;
 	private UUID playerID;
 	private Rank playerRank;
-	private String playerTown;
+	private UUID playerTown;
 	private int playerBalance;
 	private List<String> unaccessibleChunckID;
 	private Grade playerGrade;
@@ -16,7 +16,7 @@ public class PlayerData {
 	private int chaosQtt;
 	
 	
-	public PlayerData(String playerName, UUID playerID, Rank playerRank, String playerTown, int playerBalance, List<String> unaccessibleChunkID,
+	public PlayerData(String playerName, UUID playerID, Rank playerRank, UUID playerTown, int playerBalance, List<String> unaccessibleChunkID,
 			Grade playerGrade, int chaoseLevel, int chaosQtt) {
 		this.playerName = playerName;
 		this.playerID = playerID;
@@ -63,12 +63,12 @@ public class PlayerData {
 	}
 
 
-	public String getPlayerTown() {
+	public UUID getPlayerTown() {
 		return playerTown;
 	}
 
 
-	public void setPlayerTown(String playerTown) {
+	public void setPlayerTown(UUID playerTown) {
 		this.playerTown = playerTown;
 	}
 

@@ -1,6 +1,7 @@
 package fr.percygame.middlecraft.playerManager;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,8 +16,12 @@ public class PlayerManagerListener implements Listener{
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if (!p.hasPlayedBefore()) {
-			//think to add all the existing claimed chunk to the list of unacessible chunks
-			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, "Wilderness", 50, new ArrayList<String>(), Grade.PLAYER, 0, 128);
+			//
+			//
+			//think to add all the existing claimed chunk to the list of unacessible chunks /!\
+			//
+			//
+			PlayerData playerData = new PlayerData(p.getName(), p.getUniqueId(), Rank.WILD_MAN, UUID.fromString("Wilderness"), 50, new ArrayList<String>(), Grade.PLAYER, 0, 128);
 			TempPlayerData tempPlayerData = new TempPlayerData(p.getUniqueId(), 128, null, null);
 			PlayerManager.addPlayerToList(playerData, tempPlayerData);
 		}

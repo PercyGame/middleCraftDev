@@ -1,12 +1,14 @@
 package fr.percygame.middlecraft.town.chunkManager;
 
+import java.util.UUID;
+
 public class ChunkData {
 	
 	private String chunkID;
-	private String town;
+	private UUID town;
 	private ChunkType chunkType;
 	
-	public ChunkData(String chunkID, String town, ChunkType chunkType) {
+	public ChunkData(String chunkID, UUID town, ChunkType chunkType) {
 		this.chunkID = chunkID;
 		this.town = town;
 		this.chunkType = chunkType;
@@ -20,11 +22,11 @@ public class ChunkData {
 		this.chunkID = chunkID;
 	}
 
-	public String getTown() {
+	public UUID getTown() {
 		return town;
 	}
 
-	public void setTown(String town) {
+	public void setTown(UUID town) {
 		this.town = town;
 	}
 
