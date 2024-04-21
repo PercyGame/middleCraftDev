@@ -152,7 +152,7 @@ public class TownyCommand implements CommandExecutor {
 				try {
 					Player target = Bukkit.getPlayer(args[1]);
 					Main.tempPlayerData.get(target.getUniqueId()).setTownInvite(senderTownId);
-					target.sendMessage("You've got an town joining invitation from the " + Main.towns.get(senderTownId).getTownRank().toString() + " " + senderTownName + " !");
+					target.sendMessage("You've are invited to join the " + Main.towns.get(senderTownId).getTownRank().toString() + " " + senderTownName + " !");
 					target.sendMessage("do /t invite-accept, or /t invite-dismiss");
 				} catch (Exception e) {
 					return false;
@@ -163,11 +163,12 @@ public class TownyCommand implements CommandExecutor {
 			if (cmd.equals("invite-accept")) {
 				if (senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the sender is already in a town
 					senderPD.setPlayerTown(senderTPD.getTownInvite());
+					sender.sendMessage("You are know in the " + Main.towns.get(senderTPD.getTownInvite()).getTownRank() + " " + Main.towns.get(senderTPD.getTownInvite()).getTownName()); //to finish
 					//remove all unaccesible chunk from the town to the sender
 				}
 			}
 			
-			//unfinished
+			
 			if (cmd.equals("invite-dismiss")) {
 				if(senderTPD.getTownInvite()!=null) {
 					Player owner = Bukkit.getPlayer(Main.towns.get(senderTPD.getTownInvite()).getOwnerID()); //get the player instance of the town owner, to notify him that the sender refuse his invitation
@@ -177,6 +178,7 @@ public class TownyCommand implements CommandExecutor {
 				}
 				else {
 					sender.sendMessage("You do not have any invitation running :(");
+					sender.playSound(sender, Sound.ENTITY_STRIDER_STEP, 1f, 1f);
 				}
 			}
 			

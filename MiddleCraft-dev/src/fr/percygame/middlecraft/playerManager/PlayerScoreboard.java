@@ -1,6 +1,7 @@
 package fr.percygame.middlecraft.playerManager;
 
 import java.text.DecimalFormat;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -87,7 +88,16 @@ public class PlayerScoreboard{
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "MIDDLECRAFT");
 		
-		Score townDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Town " + ChatColor.RESET + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerTown());
+		String playerTownName;
+		
+		if(!Main.players.get(player.getUniqueId()).getPlayerTown().equals(UUID.fromString("Wilderness"))) {
+			playerTownName = Main.towns.get(Main.players.get(player.getUniqueId()).getPlayerTown()).getTownName();
+		}
+		else {
+			playerTownName = "Wilderness";
+		}
+		
+		Score townDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Town " + ChatColor.RESET + ChatColor.AQUA + playerTownName);
 		Score balanceDisplay = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Orens " + ChatColor.RESET + ChatColor.AQUA + Main.players.get(player.getUniqueId()).getPlayerBalance() + "¤");
 		Score separator2 = objective.getScore(ChatColor.GOLD + "◈--------------◈");
 		Score chaosTitle = objective.getScore(ChatColor.BLUE + "" + ChatColor.BOLD + "►Chaos");
