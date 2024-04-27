@@ -9,14 +9,14 @@ public class TempPlayerData {
 	private UUID playerId;
 	private float chaosGauge;
 	private UUID lastMSGTarget; //to store the id of the last target of a msg from the player
-	private List<String> unreadMSG;
+	private List<mailBoxMessage> unreadMSG;
 	private UUID townInvite; //to store the id of all the town that have invite the player (clear if the player is already in a town)
 
 	public TempPlayerData(UUID playerId, float chaosGauge, UUID lastMSGTarget, UUID townInvite) {
 		this.playerId = playerId;
 		this.chaosGauge = chaosGauge;
 		this.lastMSGTarget = lastMSGTarget;
-		this.unreadMSG = new ArrayList<String>();
+		this.unreadMSG = new ArrayList<mailBoxMessage>();
 		this.townInvite = townInvite;
 	}
 
@@ -44,11 +44,11 @@ public class TempPlayerData {
 		this.lastMSGTarget = lastMSGTarget;
 	}
 
-	public List<String> getUnreadMSG() {
+	public List<mailBoxMessage> getUnreadMSG() {
 		return unreadMSG;
 	}
 
-	public void setUnreadMSG(List<String> unreadMSG) {
+	public void setUnreadMSG(List<mailBoxMessage> unreadMSG) {
 		this.unreadMSG = unreadMSG;
 	}
 
