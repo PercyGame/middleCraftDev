@@ -23,6 +23,18 @@ import fr.percygame.middlecraft.town.TownData;
 import fr.percygame.middlecraft.town.TownManager;
 import fr.percygame.middlecraft.town.TownyCommand;
 import fr.percygame.middlecraft.town.claimInteractListener;
+import fr.percygame.middlecraft.town.chunkManager.ChunkData;
+
+
+
+/* NOTE FOR THE WHOLE CODE
+ * 
+ * ef7f084e-bb8e-463a-900a-76ac64783c91 will be used as Wilderness town uuid
+ * 
+ * */
+
+
+
 
 public class Main extends JavaPlugin{
 	
@@ -31,6 +43,7 @@ public class Main extends JavaPlugin{
 	public static Map<UUID, TempPlayerData> tempPlayerData = new HashMap<>();
 	public static Map<UUID, TownData> towns = new HashMap<>();
 	public static Map<String, Inventory> menus = new HashMap<>();
+	public static Map<String, ChunkData> claimedChunks = new HashMap<>();
 	
 	public Main() {
 		this.INSTANCE = this;
@@ -100,6 +113,7 @@ public class Main extends JavaPlugin{
 		
 		if(TownManager.saveTowns()) {
 			System.out.println("Town data succefuly saved");
+			claimedChunks.clear(); //delete content of the list, to avoid repetition in playes's data file
 		}
 		else {
 			System.out.println("Error during towns data saving");

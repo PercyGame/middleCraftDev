@@ -90,7 +90,7 @@ public class PlayerScoreboard{
 		
 		String playerTownName;
 		
-		if(!Main.players.get(player.getUniqueId()).getPlayerTown().equals(UUID.fromString("Wilderness"))) {
+		if(!Main.players.get(player.getUniqueId()).getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) {
 			playerTownName = Main.towns.get(Main.players.get(player.getUniqueId()).getPlayerTown()).getTownName();
 		}
 		else {

@@ -22,7 +22,11 @@ public class claimInteractListener implements Listener {
 			Chunk loc = e.getClickedBlock().getChunk();
 			String chunkId = loc.getX() + "." + loc.getZ();
 			
+			chunks.forEach((id) -> System.out.println(id));
+			System.out.println(chunkId);
+			
 			if(chunks.contains(chunkId)) {
+				System.out.println("action locked");
 				e.setCancelled(true);
 			}	
 		}

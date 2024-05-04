@@ -1,5 +1,7 @@
 package fr.percygame.middlecraft.town.chunkManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -47,6 +49,16 @@ public class ChunkManager {
 		if(chunks.containsKey(southChunkID)) return true;
 		
 		return false;
+	}
+	
+	public static List<String> getChunksIDsFromHaskMap(Map<String, ChunkData> chunkMap){
+		List<String> list = new ArrayList<>();
+		
+		chunkMap.forEach((id,cd) -> list.add(id));
+		
+		System.out.println("<locked chunks list> " + list);
+		
+		return list;
 	}
 	
 }

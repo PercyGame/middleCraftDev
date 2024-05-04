@@ -77,6 +77,10 @@ public class TownData {
 	public void addChunks(ChunkData chunk) {
 		this.chunks.put(chunk.getChunkID(), chunk);
 	}
+	
+	public void removeChunk(ChunkData chunk) {
+		this.chunks.remove(chunk.getChunkID());
+	}
 
 	public TownRank getTownRank() {
 		return townRank;

@@ -26,6 +26,7 @@ public class TownManager {
 		File f = new File(saveDir, townId + ".json"); // create object of save file
 		final String json = tdsm.serialize(td); // serialize TownData to json syntaxe
 		FileUtils.save(f, json); // saveing data in json syntaxe in the right file
+		updateGeneralClaimedChunkList();
 		return true;
 	}
 		
@@ -51,7 +52,10 @@ public class TownManager {
 				for (File file : files) { //do the following actions for each files
 					String json = FileUtils.loadContent(file); //read data stored in file
 					TownData td = tdsm.deserialise(json); //convert data readed into TownData object
-					Main.towns.put(td.getId(), td); //add converted data to the Map pl 
+					Main.towns.put(td.getId(), td); //add converted data to the Map pl
+					
+					//this line is not tested yep, may causes issues
+					Main.claimedChunks.putAll(td.getChunks()); //add the claimed chunk of the specified town to the global claimed chunk list (used for new player, etc...)
 				}
 					
 				return true; //return that every thing happened well
@@ -72,6 +76,27 @@ public class TownManager {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean updateGeneralClaimedChunkList() {
+		try {
+			File[] files = saveDir.listFiles(); // get a list of every file in the townData save folder
+			if (!files.equals(null)) { //check if their is actually files to load
+				for (File file : files) { //do the following actions for each files
+					String json = FileUtils.loadContent(file); //read data stored in file
+					TownData td = tdsm.deserialise(json); //convert data readed into TownData object
+					
+					//this line is not tested yep, may causes issues
+					Main.claimedChunks.putAll(td.getChunks()); //add the claimed chunk of the specified town to the global claimed chunk list (used for new player, etc...)
+				}
+					
+				return true; //return that every thing happened well
+			}
+		} catch (Exception e) {
+			return false; //return that something went wrong
+		}
+		
+		return false; //return that something went wrong
 	}
 	
 }

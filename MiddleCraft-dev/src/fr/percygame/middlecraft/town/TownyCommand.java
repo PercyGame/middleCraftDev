@@ -45,7 +45,7 @@ public class TownyCommand implements CommandExecutor {
 			if (cmd.equals("create")) {//check if player want to create a new town
 				if (!args[1].isBlank()) {//check if the sender specified a name for his town
 					if (sender.getWorld().getName().equals("world")) {
-						if(senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { //check if the player is already in a town
+						if(senderPD.getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) { //check if the player is already in a town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
 								UUID newTownId = UUID.randomUUID(); // create here to be able to use it in the chunk data creation
 								ChunkData chunk = new ChunkData(chunkID,newTownId, ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
@@ -84,7 +84,7 @@ public class TownyCommand implements CommandExecutor {
 			if (cmd.equals("claim")) {
 				System.out.println(sender.getWorld().getName());
 				if (sender.getWorld().getName().equals("world")) {
-					if (!senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) {
+					if (!senderPD.getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) {
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD) || senderPD.getPlayerRank().equals(Rank.OFFICIER)) { //check if the sender can claim for his town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {
 								TownData town = Main.towns.get(senderPD.getPlayerTown());
@@ -102,7 +102,7 @@ public class TownyCommand implements CommandExecutor {
 												sender.playSound(sender, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 												PlayerScoreboard.createScoreboard(sender);
 												sender.sendMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + cost + " ¤");
-												sender.sendMessage("You have claimed " + cd.getChunkID());
+												sender.sendMessage("You have claimed " + chunk.getChunkID()); //avant, c'était cd à la place de chunk
 											}
 											else {
 												sender.sendMessage("You need " + cost + "¤ to claim new chunks");
@@ -128,7 +128,7 @@ public class TownyCommand implements CommandExecutor {
 			//untested
 			if (cmd.equals("unclaim")) { //code to handle the unclaiming command
 				if (sender.getWorld().getName().equals("world")) { // check if the player is in the overworld
-					if (!senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the player have a town (Wilderness being default town
+					if (!senderPD.getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) { // check if the player have a town (Wilderness being default town
 						if (senderPD.getPlayerRank().equals(Rank.KING) || senderPD.getPlayerRank().equals(Rank.LORD)) { // check if the sender is king or lord (officier can't unclaim)
 							ChunkData cd = ChunkManager.getChunk(chunkID);
 							if (cd != null) { //check if the chunk is in a town
@@ -136,6 +136,9 @@ public class TownyCommand implements CommandExecutor {
 									// code to remove chunk from all player's unaccessible chunk list and delete chunkdata file
 									PlayerManager.removeUnaccessibleChunkToAllPlayers(chunkID, senderPD.getPlayerTown());
 									sender.sendMessage("You have unclaimed " + cd.getChunkID());
+									
+									//remove chunk from the town's chunks list
+									Main.towns.get(senderPD.getPlayerTown()).removeChunk(cd);
 								}	
 							}
 							
@@ -161,7 +164,7 @@ public class TownyCommand implements CommandExecutor {
 			
 			//unfinished
 			if (cmd.equals("invite-accept")) {
-				if (senderPD.getPlayerTown().equals(UUID.fromString("Wilderness"))) { // check if the sender is already in a town
+				if (senderPD.getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) { // check if the sender is already in a town
 					senderPD.setPlayerTown(senderTPD.getTownInvite());
 					sender.sendMessage("You are know in the " + Main.towns.get(senderTPD.getTownInvite()).getTownRank() + " " + Main.towns.get(senderTPD.getTownInvite()).getTownName()); //to finish
 					Main.towns.get(senderPD.getPlayerTown()).getChunks().forEach((chunkId, cd) -> PlayerManager.removeUnaccessibleChunkToPlayer(senderPD, chunkId, null)); //not tested yet, could cause issus
@@ -183,9 +186,63 @@ public class TownyCommand implements CommandExecutor {
 			}
 			
 			//unfinished
+			if (cmd.equals("eject")) {
+				if(!senderPD.getPlayerRank().equals(Rank.KING) || !senderPD.getPlayerRank().equals(Rank.LORD)) {
+					sender.sendMessage(ChatColor.RED + "You need to be Lord or King to perform such commands");
+					return false;
+				}
+				if(args[1].isBlank()) {
+					sender.sendMessage("You have to specifiate a player name");
+					return false;
+				}
+				
+				if(!args[1].equals(sender.getName())) {
+					sender.sendMessage("You can not eject yourself");
+					return false;
+				}
+				
+				try {
+					Player target = Bukkit.getPlayer(args[1]);
+					PlayerData targetPD = Main.players.get(target.getUniqueId());
+					targetPD.setPlayerTown(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"));
+					targetPD.setPlayerRank(Rank.WILD_MAN);
+					targetPD.setUnaccessibleChunckID(ChunkManager.getChunksIDsFromHaskMap(Main.claimedChunks));
+					target.sendMessage("You have been ejected from " + Main.towns.get(senderPD.getPlayerTown()).getTownName());
+					
+				} catch (Exception e) {
+					sender.sendMessage("You have to specifiate a valide player name");
+					return false;
+				}
+			}
+			
+			
+			
+			// command that send the sender a message, to show him the local map of claimed chunks, look like this:
+			/* 					 ______________
+			 * .________________/Town Map (x.y)\________________.
+			 * -------	---------------		x > you'r position
+			 * -------	---------------		+ > you'r town's chunks
+			 * ---N---	---------------		+ > other town's chunks
+			 * --W+E--	-------x-------		
+			 * ---S---	---------------
+			 * -------	---------------
+			 * -------	---------------
+			 * .________________________________________________.
+			 * */
+			//note that their are color, to know chunk's town
+			//unfinished
+			if (cmd.equals("map")) {
+				
+			}
+			
+			
+			
+			
+			//unfinished
 			if (cmd.equals("")) {
 				
 			}
+			
 			
 			
 		}		
