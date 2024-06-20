@@ -97,7 +97,7 @@ public class Main extends JavaPlugin{
 				}
 				
 			}
-		}.runTaskTimerAsynchronously(INSTANCE, 0, 20*60*10);// run saving data every 10min, using an other thread
+		}.runTaskTimerAsynchronously(INSTANCE, 0, 20*60*16);// run saving data every 16min, using an other thread
 		
 		
 	}

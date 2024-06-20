@@ -48,7 +48,7 @@ public class TownyCommand implements CommandExecutor {
 						if(senderPD.getPlayerTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) { //check if the player is already in a town
 							if (!senderPD.getUnaccessibleChunckID().contains(chunkID)) {// check if the player can change things is his current chunk (btw if the chunk is already claimed)
 								UUID newTownId = UUID.randomUUID(); // create here to be able to use it in the chunk data creation
-								ChunkData chunk = new ChunkData(chunkID,newTownId, ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
+								ChunkData chunk = new ChunkData(chunkID, newTownId, ChunkType.COMMON); //create a new chunkData, for the original chunk of the new town
 								chunks.put(chunkID, chunk); //add the new chunk to the new town chunk list
 								TownData newTown = new TownData(newTownId, args[1], sender.getUniqueId(), false, 9, chunks, TownRank.SETTLEMENT, 0); // create the new tonw
 								if(TransactionManager.orensWithdraw(senderPD, 100, false)) {
@@ -220,11 +220,11 @@ public class TownyCommand implements CommandExecutor {
 			// command that send the sender a message, to show him the local map of claimed chunks, look like this:
 			/* 					 ______________
 			 * .________________/Town Map (x.y)\________________.
-			 * -------	---------------		x > you'r position
-			 * -------	---------------		+ > you'r town's chunks
-			 * ---N---	---------------		+ > other town's chunks
+			 * -------	---------------		x > your position
+			 * -------	---------------		+ > your town's chunks
+			 * --\N/--	---------------		+ > other town's chunks
 			 * --W+E--	-------x-------		
-			 * ---S---	---------------
+			 * --/S\--	---------------
 			 * -------	---------------
 			 * -------	---------------
 			 * .________________________________________________.
