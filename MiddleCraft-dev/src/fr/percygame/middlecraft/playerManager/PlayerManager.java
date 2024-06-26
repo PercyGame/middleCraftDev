@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import fr.percygame.middlecraft.Main;
@@ -17,6 +16,7 @@ public class PlayerManager {
 	public static List<PlayerData> players = new ArrayList<PlayerData>(); //create List of players
 	static File saveDir; // create the path for saving files
 	final static PlayerDataSerealizationManager pdsm = new PlayerDataSerealizationManager(); // create a instance of the class in charge to (JSON)serialize data
+	
 	
 	//constructor
 	public PlayerManager(Plugin plugin) {
@@ -122,5 +122,7 @@ public class PlayerManager {
 		Main.players.forEach((pId, pd) -> removeUnaccessibleChunkToPlayer(pd, chunkID, townID));
 		return true;
 	}
+	
+	
 
 }

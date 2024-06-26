@@ -1,6 +1,8 @@
 package fr.percygame.middlecraft.town;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -220,19 +222,28 @@ public class TownyCommand implements CommandExecutor {
 			// command that send the sender a message, to show him the local map of claimed chunks, look like this:
 			/* 					 ______________
 			 * .________________/Town Map (x.y)\________________.
-			 * -------	---------------		x > your position
-			 * -------	---------------		+ > your town's chunks
-			 * --\N/--	---------------		+ > other town's chunks
-			 * --W+E--	-------x-------		
-			 * --/S\--	---------------
-			 * -------	---------------
-			 * -------	---------------
+			 *0-------	---------------		x > your position
+			 *1-------	---------------		+ > your town's chunks
+			 *2--\N/--	---------------		+ > other town's chunks
+			 *3--W+E--	-------x-------		
+			 *4--/S\--	---------------
+			 *5-------	---------------
+			 *6-------	---------------
 			 * .________________________________________________.
 			 * */
 			//note that their are color, to know chunk's town
 			//unfinished
+			// to debug
 			if (cmd.equals("map")) {
-				
+				sender.sendMessage("._______/Town Map (" + chunkID + ")\\_______.");
+				sender.sendMessage(" ------- " + createLine(0, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" ------- " + createLine(1, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" --\\N/-- " + createLine(2, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" --W+E-- " + createLine(3, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" --/S\\-- " + createLine(4, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" ------- " + createLine(5, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage(" ------- " + createLine(6, new ChunkData(chunkID, UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"), ChunkType.COMMON), senderPD));
+				sender.sendMessage("._____________________________.");
 			}
 			
 			
@@ -248,5 +259,42 @@ public class TownyCommand implements CommandExecutor {
 		}		
 		return true;
 	}
-
+	
+	//Please note that lineId start by 0
+	private static String createLine(int lineId, ChunkData origine, PlayerData sender) {
+		List<String> line = new ArrayList<>();
+		Map<UUID, ChatColor> townsInMap = new HashMap<>();
+		ChatColor[] colors = {ChatColor.AQUA, ChatColor.GREEN, ChatColor.GRAY, ChatColor.RED, ChatColor.LIGHT_PURPLE, ChatColor.YELLOW, ChatColor.WHITE};
+		for (int i=0;i<15;i++) {
+			
+			ChunkData cd = ChunkManager.getChunkForMap(origine, i+(15*lineId));
+			
+			System.out.println(i);
+			System.out.println(cd.getTown());
+			
+			if (!townsInMap.containsKey(cd.getTown())) {
+				int colorNum = townsInMap.size()+1;
+				townsInMap.put(cd.getTown(), colors[colorNum]); //attribut to the new town a free color (hope there will be enough)
+			}
+			
+			
+			if (cd.getTown().equals(UUID.fromString("ef7f084e-bb8e-463a-900a-76ac64783c91"))) { //triggered if the chunk is in wilderness
+				line.add("-");
+			}
+			else if (sender.getPlayerTown().equals(cd.getTown())) { //triggered if the chunk is in the sender's town
+				line.add(ChatColor.GOLD + "+" + ChatColor.RESET);
+			}
+			else {
+				line.add(townsInMap.get(cd.getTown()) + "+" + ChatColor.RESET);
+			}
+		}
+		
+		if (lineId == 3) {
+			line.remove(7);
+			line.add(7, ChatColor.DARK_AQUA + "x" + ChatColor.RESET);
+		}
+		
+		return String.join("", line);
+		
+	}
 }

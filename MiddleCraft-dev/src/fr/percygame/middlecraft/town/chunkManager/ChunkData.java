@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class ChunkData {
 	
-	private String chunkID;
+	private String chunkID; //ex: 2.5
 	private UUID town;
 	private ChunkType chunkType;
 	
